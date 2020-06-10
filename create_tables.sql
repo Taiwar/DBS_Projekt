@@ -19,7 +19,22 @@ drop table Abrechnung cascade constraints purge;
 */
 
 create table Lebensmittel(
-    name varchar(100) primary key not null
+                             name varchar(100) primary key not null,
+                             milch number(1) default 0 not null,
+                             gluteinhaltiges_getreide number(1) default 0 not null,
+                             haselnuss number(1) default 0 not null,
+                             krebstiere number(1) default 0 not null,
+                             eier number(1) default 0 not null,
+                             fisch number(1) default 0 not null,
+                             erdnuss number(1) default 0 not null,
+                             soja number(1) default 0 not null,
+                             schalenfruechte number(1) default 0 not null,
+                             sellerie number(1) default 0 not null,
+                             senf number(1) default 0 not null,
+                             sesamsamen number(1) default 0 not null,
+                             schwefeldioxid number(1) default 0 not null,
+                             lupine number(1) default 0 not null,
+                             weichtiere number(1) default 0 not null
 );
 
 
@@ -28,50 +43,15 @@ create table Einkaufspreis(
                               einheit varchar(5) check (einheit in ('STK', 'GRAMM', 'ML')) not null,
                               grundmenge number not null,
                               datum timestamp not null,
-                              l_name varchar(100) references Lebensmittel(name) not null,
-                              primary key (datum, l_name)
-);
-
-create table Allergen(
-    name varchar(100) primary key check (
-            name in (
-                     'MILCH',
-                     'GLUTENHALTIGES_GETREIDE',
-                     'HASELNUSS',
-                     'KREBSTIERE',
-                     'EIER',
-                     'FISCH',
-                     'ERDNUSS',
-                     'SOJA',
-                     'SCHALENFRUECHTE',
-                     'SELLERIE',
-                     'SENF',
-                     'SESAMSAMEN',
-                     'SCHWEFELDIOXID',
-                     'LUPINE',
-                     'WEICHTIERE'
-            )
-        )
-);
-
-create table AllergenLebensmittel(
-                                     l_name varchar(100) references Lebensmittel(name) not null,
-                                     a_name varchar(100) references Allergen(name) not null,
-                                     primary key (l_name, a_name)
-);
-
-create table LebensmittelMenge(
-                                  id int primary key not null,
-                                  l_name varchar(100) references Lebensmittel(name) not null,
-                                  menge int not null,
-                                  einheit varchar(5) check (einheit in ('STK', 'GRAMM', 'ML'))
+                              fk_lebensmittel_name varchar(100) references Lebensmittel(name) not null,
+                              primary key (datum, fk_lebensmittel_name)
 );
 
 create table Komponente(
                            name varchar(100) primary key not null,
                            grundmenge int not null,
                            einheit varchar(5) check (einheit in ('STK', 'GRAMM', 'ML')),
-                           langtext varchar(2000),
+                           langtext clob,
                            kategorie varchar(100) check (
                                    kategorie in (
                                                  'CHEF DE CUISINE',
@@ -86,11 +66,12 @@ create table Komponente(
                                )
 );
 
-create table KomponentenMenge(
-                                 id int primary key not null,
-                                 k_name varchar(100) references Komponente(name) not null,
-                                 menge int not null,
-                                 einheit varchar(5) check (einheit in ('STK', 'GRAMM', 'ML'))
+create table LebensmittelMenge(
+                                  fk_lebensmittel_name varchar(100) references Lebensmittel(name) not null,
+                                  fk_komponente_name varchar(100) references Komponente(name) not null,
+                                  menge int not null,
+                                  einheit varchar(5) check (einheit in ('STK', 'GRAMM', 'ML')),
+                                  primary key (fk_lebensmittel_name, fk_komponente_name)
 );
 
 create table Gericht(
@@ -107,8 +88,17 @@ create table Gericht(
                                               'GETRAENK'
                                 )
                             ),
-                        langtext varchar(2000),
+                        langtext clob,
                         zubereitungsdauer int not null
+);
+
+
+create table KomponentenMenge(
+                                 fk_komponente_name varchar(100) references Komponente(name) not null,
+                                 fk_gericht_name varchar(100) references Gericht(name) not null,
+                                 menge int not null,
+                                 einheit varchar(5) check (einheit in ('STK', 'GRAMM', 'ML')),
+                                 primary key (fk_komponente_name, fk_gericht_name)
 );
 
 create table Kalkulation(
@@ -117,8 +107,8 @@ create table Kalkulation(
                             gewinnmarge number not null,
                             kostenmarge number not null,
                             datum timestamp not null,
-                            g_name varchar(100) references Gericht(name) not null,
-                            primary key (datum, g_name)
+                            fk_gericht_name varchar(100) references Gericht(name) not null,
+                            primary key (datum, fk_gericht_name)
 );
 
 create table Saison(
@@ -129,21 +119,22 @@ create table Saison(
 
 create table Speisekarte(
                             name varchar(100) primary key not null,
-                            saison varchar(100) references Saison(name) not null,
+                            fk_saison_name varchar(100) references Saison(name) not null,
                             startDatum date not null,
                             endDatum date not null,
-                            langtext varchar(2000)
+                            langtext clob
 );
 
 create table GerichtSpeisekarte(
-                                   g_name varchar(100) references Gericht(name) not null,
-                                   s_name varchar(100) references Speisekarte(name) not null,
-                                   primary key (g_name, s_name)
+                                   fk_gericht_name varchar(100) references Gericht(name) not null,
+                                   fk_speisekarte_name varchar(100) references Speisekarte(name) not null,
+                                   primary key (fk_gericht_name, fk_speisekarte_name)
 );
 
 
 create table Tisch(
                       nummer int primary key not null,
+                      anzahlPlaetze int not null,
                       name varchar(100),
                       statusEssen varchar(10) check (
                               statusEssen in (
@@ -166,7 +157,6 @@ create table Tisch(
 );
 
 create table Person(
-                       id int primary key not null,
                        platz int not null,
                        vip varchar(20) check (
                                vip in (
@@ -175,7 +165,8 @@ create table Person(
                                        'FRAU'
                                )
                            ),
-                       tisch int references Tisch(nummer) not null
+                       fk_tisch_nummer int references Tisch(nummer) not null,
+                       primary key (platz, fk_tisch_nummer)
 );
 
 create table Abrechnung(
@@ -183,16 +174,20 @@ create table Abrechnung(
                            bezahlbetrag number not null,
                            abrechungssumme number not null,
                            datum timestamp not null,
-                           kunde int references Person(id) not null
+                           fk_person_platz int not null,
+                           fk_person_tisch int not null,
+                           foreign key (fk_person_platz, fk_person_tisch) references Person(platz, fk_tisch_nummer)
 );
 
 create table Bestellung(
-                           bestellungsnr int primary key not null,
                            aufpreis number default 0,
                            reklamiert number(1) default 0 not null,
                            fertig number(1) default 0 not null,
                            aufgegeben timestamp not null,
-                           abrechung int references Abrechnung(rechnungsnr) not null,
-                           gericht varchar(100) references Gericht(name) not null,
-                           kunde int references Person(id) not null
+                           fk_abrechnung_rechnungsnr int references Abrechnung(rechnungsnr) not null,
+                           fk_gericht_name varchar(100) references Gericht(name) not null,
+                           fk_person_platz int not null,
+                           fk_person_tisch int not null,
+                           foreign key (fk_person_platz, fk_person_tisch) references Person(platz, fk_tisch_nummer),
+                           primary key (fk_abrechnung_rechnungsnr, fk_gericht_name, fk_person_platz, fk_person_tisch)
 );
