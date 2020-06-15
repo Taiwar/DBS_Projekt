@@ -145,7 +145,7 @@ create table Tisch(
                           ),
                       phaseEssen varchar(20) check (
                               phaseEssen in (
-                                             'GETREANKE',
+                                             'GETRAENKE',
                                              'VORSPEISE',
                                              'HAUPTGANG',
                                              'NACHTISCH',
@@ -156,6 +156,8 @@ create table Tisch(
                       zuletztBetreut timestamp not null
 );
 
+-- TODO: Eigentlich braucht Person auch einen technischen Schluessel, wenn sie in der Abrechnung festgehalten wird...
+-- TODO: Braucht die Abrechnung die Person dann überhaupt, oder findet die Zuweisung der Bestellungen einfach nur einmal statt und dann ist der Tisch/Platz ja irrelevant?
 create table Person(
                        platz int not null,
                        vip varchar(20) check (
