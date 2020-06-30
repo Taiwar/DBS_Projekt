@@ -1,6 +1,10 @@
 -- 1
 -- Speisekarte generieren: Wähle 5 saisonale Gerichte für jede Kategorie aus und sortiere die Gerichte zu jeder
 -- Kategorie nach Marge und Verkaufspreis.
+select G.NAME, K.VERKAUFSPREIS
+from GERICHT G join KALKULATION K on G.NAME = K.FK_GERICHT_NAME
+order by K.GEWINNMARGE desc, K.VERKAUFSPREIS desc
+FETCH FIRST 5 ROWS Only;
 
 -- 2
 -- Kochreihenfolge generieren/Anzeige in der Küche bereitstellen: Sortiere Komponenten von nicht fertigen
