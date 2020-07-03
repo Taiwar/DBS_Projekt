@@ -10,15 +10,16 @@ order by K.GEWINNMARGE desc, K.VERKAUFSPREIS desc
 -- 2
 -- Kochreihenfolge generieren/Anzeige in der Küche bereitstellen: Sortiere Komponenten von nicht fertigen
 -- Bestellungen nach Aufgabe-Datum und Zubereitungsdauer. Filtere das Ergebnis nach Kategorie und Tisch und Person.
-select K.NAME, KM.MENGE, KM.EINHEIT, K.KATEGORIE
+select K.NAME, KM.MENGE, KM.EINHEIT, K.KATEGORIE, G.ZUBEREITUNGSDAUER, to_char(B.AUFGEGEBEN, 'HH:mm') "Aufgegeben"
 from KOMPONENTENMENGE KM
          join KOMPONENTE K on KM.FK_KOMPONENTE_NAME = K.NAME
          join GERICHT G on KM.FK_GERICHT_NAME = G.NAME
          join BESTELLUNG B on B.FK_GERICHT_NAME = G.NAME
 where
-        B.FERTIG = 0 and
-        B.FK_PERSON_TISCH = 0 and
-        B.FK_PERSON_PLATZ = 0
+        B.FERTIG = 0
+        -- Filter auf Tisch und Person
+        -- and B.FK_PERSON_TISCH = 0 and
+        -- B.FK_PERSON_PLATZ = 0
 order by B.AUFGEGEBEN, G.ZUBEREITUNGSDAUER, K.KATEGORIE;
 
 -- 3
