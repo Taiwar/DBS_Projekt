@@ -9,8 +9,23 @@ insert into LEBENSMITTEL values ('Salat', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
 -- Einkaufspreise
 
--- Gerichte
+-- Komponente
+
+-- LebensmittelMenge
+
+-- Gericht
 insert into GERICHT values ('Test', 1, 1, 10, CURRENT_TIMESTAMP, 'HAUPTGERICHT', 'Testgericht', 10.0);
+
+-- KomponentenMenge
+
+-- Kalkulation
+
+-- Saison
+
+-- Speisekarte
+
+-- GerichtSpeisekarte
+
 
 /**
   >===========================================================================================================<
