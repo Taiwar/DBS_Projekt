@@ -723,12 +723,23 @@ insert into SAISON values ('Sommer', 16, 40);
 */
 
 -- Tische
-insert into TISCH values (1, 4, 'Fenster rechts', 'BESTELLT', 'GETRAENKE', CURRENT_TIMESTAMP);
-insert into TISCH values (2, 4, 'Fenster links', 'BESTELLT', 'VORSPEISE', CURRENT_TIMESTAMP);
-insert into TISCH values (3, 6, 'Familientisch 1', 'ERHALTEN', 'GETRAENKE', CURRENT_TIMESTAMP);
-insert into TISCH values (4, 6, 'Familientisch 2', 'ERHALTEN', 'VORSPEISE', CURRENT_TIMESTAMP);
-insert into TISCH values (5, 2, 'Paartisch 1', 'FERTIG', 'HAUPTGANG', CURRENT_TIMESTAMP);
-insert into TISCH values (6, 2, 'Paartisch 2', 'FERTIG', 'NACHTISCH', CURRENT_TIMESTAMP);
+
+/*
+delete from BESTELLUNG;
+delete from ABRECHNUNG;
+delete from PERSON;
+delete from TISCH;
+*/
+
+-- Tische
+insert into TISCH values (1, 4, 'Fenster rechts', 'BESTELLT', 'GETRAENKE', '2020-09-01 13:02:33');
+insert into TISCH values (2, 4, 'Fenster links', 'BESTELLT', 'VORSPEISE', '2020-09-01 13:10:02');
+insert into TISCH values (3, 6, 'Familientisch 1', 'ERHALTEN', 'GETRAENKE', '2020-09-01 13:04:20');
+insert into TISCH values (4, 6, 'Familientisch 2', 'ERHALTEN', 'VORSPEISE', '2020-09-01 13:08:45');
+insert into TISCH values (5, 2, 'Paartisch 1', 'FERTIG', 'HAUPTGANG', '2020-09-01 13:00:32');
+insert into TISCH values (6, 2, 'Paartisch 2', 'FERTIG', 'NACHTISCH', '2020-09-01 13:04:37');
+insert into TISCH values (7, 16, 'Tafel 1', 'ERHALTEN', 'HAUPTGANG', '2020-09-01 13:04:20');
+insert into TISCH values (8, 16, 'Tafel 2', 'FERTIG', 'GETRAENKE', '2020-09-01 13:02:50');
 
 -- Personen
 insert into PERSON values (1, 'NEIN', 1);
@@ -739,15 +750,101 @@ insert into PERSON values (1, 'NEIN', 2);
 insert into PERSON values (2, 'NEIN', 2);
 insert into PERSON values (1, 'NEIN', 3);
 insert into PERSON values (2, 'NEIN', 3);
-insert into PERSON values (3, 'NEIN', 3);
+insert into PERSON values (3, 'GEBURTSTAGSKIND', 3);
+insert into PERSON values (1, 'NEIN', 4);
+insert into PERSON values (2, 'NEIN', 4);
+insert into PERSON values (3, 'NEIN', 4);
+insert into PERSON values (4, 'NEIN', 4);
+insert into PERSON values (1, 'NEIN', 5);
+insert into PERSON values (2, 'NEIN', 5);
 insert into PERSON values (1, 'NEIN', 6);
+insert into PERSON values (2, 'GEBURTSTAGSKIND', 6);
+insert into PERSON values (1, 'NEIN', 7);
+insert into PERSON values (2, 'GEBURTSTAGSKIND', 7);
+insert into PERSON values (3, 'NEIN', 7);
+insert into PERSON values (4, 'NEIN', 7);
+insert into PERSON values (5, 'NEIN', 7);
+insert into PERSON values (6, 'NEIN', 7);
+insert into PERSON values (7, 'NEIN', 7);
+insert into PERSON values (8, 'NEIN', 7);
+insert into PERSON values (9, 'NEIN', 7);
+insert into PERSON values (10, 'NEIN', 7);
+insert into PERSON values (11, 'NEIN', 7);
+insert into PERSON values (1, 'NEIN', 8);
+insert into PERSON values (2, 'NEIN', 8);
+insert into PERSON values (3, 'NEIN', 8);
+insert into PERSON values (4, 'NEIN', 8);
+insert into PERSON values (5, 'NEIN', 8);
+insert into PERSON values (6, 'NEIN', 8);
+insert into PERSON values (7, 'NEIN', 8);
+insert into PERSON values (8, 'GEBURTSTAGSKIND', 8);
+insert into PERSON values (9, 'NEIN', 8);
 
 -- Abrechnungen
 insert into ABRECHNUNG values (1, 10.50, 11.00, CURRENT_DATE, 1, 1);
 insert into ABRECHNUNG values (2, 52.00, 55.00, CURRENT_DATE, 1, 2);
 insert into ABRECHNUNG values (3, 51.90, 60.00, CURRENT_DATE, 2, 2);
 insert into ABRECHNUNG values (4, 20.00, 20.00, CURRENT_DATE, 3, 3);
-insert into ABRECHNUNG values (5, 15.50, 16.00, CURRENT_DATE, 1, 6);
+insert into ABRECHNUNG values (5, 15.50, 16.00, CURRENT_DATE, 1, 4);
+insert into ABRECHNUNG values (6, 52.00, 55.00, CURRENT_DATE, 1, 5);
+insert into ABRECHNUNG values (7, 52.00, 55.00, CURRENT_DATE, 2, 5);
+insert into ABRECHNUNG values (8, 51.90, 60.00, CURRENT_DATE, 2, 6);
+insert into ABRECHNUNG values (9, 20.00, 20.00, CURRENT_DATE, 3, 7);
+insert into ABRECHNUNG values (10, 150.30, 16.00, CURRENT_DATE, 1, 8);
 
 -- Bestellungen
-insert into BESTELLUNG values (0.0, 0, 0, CURRENT_TIMESTAMP, 1, 'Schnitzel mit Pommes', 1, 1);
+insert into BESTELLUNG values (1, 0.0, 0, 0, CURRENT_TIMESTAMP, 1, 'Käsespätzle', 1, 1);
+insert into BESTELLUNG values (2, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Käsespätzle', 2, 1);
+insert into BESTELLUNG values (3, 0.0, 0, 1, CURRENT_TIMESTAMP, 9, 'Käsespätzle', 8, 7);
+insert into BESTELLUNG values (4, 0.0, 1, 1, CURRENT_TIMESTAMP, 9, 'Käsespätzle', 9, 7);
+insert into BESTELLUNG values (5, 0.0, 0, 1, CURRENT_TIMESTAMP, 9, 'Flädlessuppe', 1, 7);
+insert into BESTELLUNG values (6, 0.0, 0, 1, CURRENT_TIMESTAMP, 3, 'Flädlessuppe', 1, 2);
+insert into BESTELLUNG values (7, 0.0, 0, 1, CURRENT_TIMESTAMP, 3, 'Flädlessuppe', 2, 2);
+insert into BESTELLUNG values (8, 0.0, 0, 1, CURRENT_TIMESTAMP, 9, 'Sprudel', 2, 7);
+insert into BESTELLUNG values (9, 0.0, 0, 1, CURRENT_TIMESTAMP, 9, 'Sprudel', 3, 7);
+insert into BESTELLUNG values (10, 0.0, 0, 1, CURRENT_TIMESTAMP, 4, 'Sprudel', 1, 3);
+insert into BESTELLUNG values (11, 0.0, 0, 1, CURRENT_TIMESTAMP, 4, 'Sprudel', 2, 3);
+insert into BESTELLUNG values (12, 0.0, 0, 1, CURRENT_TIMESTAMP, 6, 'Sprudel', 1, 5);
+insert into BESTELLUNG values (13, 0.0, 0, 1, CURRENT_TIMESTAMP, 9, 'Schweinemedaillons mit Kroketten in Rahmsoße', 1, 1);
+insert into BESTELLUNG values (14, 0.0, 0, 1, CURRENT_TIMESTAMP, 6, 'Schweinemedaillons mit Kroketten in Rahmsoße', 1, 5);
+insert into BESTELLUNG values (15, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Schweinemedaillons mit Kroketten in Rahmsoße', 1, 1);
+insert into BESTELLUNG values (16, 0.0, 0, 1, CURRENT_TIMESTAMP, 9, 'Fleischküchle mit Kartoffelsalat', 4, 7);
+insert into BESTELLUNG values (17, 0.0, 0, 1, CURRENT_TIMESTAMP, 4, 'Fleischküchle mit Kartoffelsalat', 2, 3);
+insert into BESTELLUNG values (18, 0.0, 0, 1, CURRENT_TIMESTAMP, 4, 'Fleischküchle mit Kartoffelsalat', 3, 3);
+insert into BESTELLUNG values (19, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Fleischküchle mit Kartoffelsalat', 2, 1);
+insert into BESTELLUNG values (20, 0.0, 0, 1, CURRENT_TIMESTAMP, 9, 'ofengegarte Austern', 5, 7);
+insert into BESTELLUNG values (21, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'ofengegarte Austern', 3, 1);
+insert into BESTELLUNG values (22, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Geißburger Marsch dazu Spätzle', 1, 1);
+insert into BESTELLUNG values (23, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Geißburger Marsch dazu Spätzle', 1, 1);
+insert into BESTELLUNG values (24, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Geißburger Marsch dazu Spätzle', 1, 1);
+insert into BESTELLUNG values (25, 0.0, 0, 1, CURRENT_TIMESTAMP, 5, 'Kürbiscremesuppe', 1, 4);
+insert into BESTELLUNG values (26, 0.0, 0, 1, CURRENT_TIMESTAMP, 5, 'Kürbiscremesuppe', 2, 4);
+insert into BESTELLUNG values (27, 0.0, 0, 1, CURRENT_TIMESTAMP, 6, 'Kürbiscremesuppe', 1, 5);
+insert into BESTELLUNG values (28, 0.0, 0, 1, CURRENT_TIMESTAMP, 7, 'Kürbiscremesuppe', 2, 5);
+insert into BESTELLUNG values (29, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Kürbiscremesuppe', 1, 1);
+insert into BESTELLUNG values (30, 0.0, 0, 1, CURRENT_TIMESTAMP, 5, 'Antipasti-Platte', 1, 4);
+insert into BESTELLUNG values (31, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Antipasti-Platte', 1, 1);
+insert into BESTELLUNG values (32, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Antipasti-Platte', 1, 1);
+insert into BESTELLUNG values (33, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Tomatensuppe', 1, 1);
+insert into BESTELLUNG values (34, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Tomatensuppe', 1, 1);
+insert into BESTELLUNG values (35, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Tomatensuppe', 1, 1);
+insert into BESTELLUNG values (36, 0.0, 0, 1, CURRENT_TIMESTAMP, 5, 'Zwiebelrostbraten mit Spätzle', 3, 4);
+insert into BESTELLUNG values (37, 0.0, 0, 1, CURRENT_TIMESTAMP, 5, 'Zwiebelrostbraten mit Spätzle', 4, 4);
+insert into BESTELLUNG values (38, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Zwiebelrostbraten mit Spätzle', 1, 1);
+insert into BESTELLUNG values (39, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Zwiebelrostbraten mit Spätzle', 1, 1);
+insert into BESTELLUNG values (40, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Zwiebelrostbraten mit Spätzle', 1, 1);
+insert into BESTELLUNG values (41, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Chili con carne mit ofenfrischem Baguette', 1, 1);
+insert into BESTELLUNG values (42, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Chili con carne mit ofenfrischem Baguette', 1, 1);
+insert into BESTELLUNG values (43, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'grünes Thai-Curry mit Reis und Gemüse', 1, 1);
+insert into BESTELLUNG values (44, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'grünes Thai-Curry mit Reis und Gemüse', 1, 1);
+insert into BESTELLUNG values (45, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'grünes Thai-Curry mit Reis und Gemüse', 1, 1);
+insert into BESTELLUNG values (46, 0.0, 0, 1, CURRENT_TIMESTAMP, 1, 'Gratinierte Spargelpfannkuchen', 2, 1);
+insert into BESTELLUNG values (47, 0.0, 0, 1, CURRENT_TIMESTAMP, 2, 'Gratinierte Spargelpfannkuchen', 3, 1);
+insert into BESTELLUNG values (48, 0.0, 0, 1, CURRENT_TIMESTAMP, 2, 'Gratinierte Spargelpfannkuchen', 4, 1);
+-- Nicht abgerechnet
+insert into BESTELLUNG values (49, 0.0, 0, 1, CURRENT_TIMESTAMP, null, 'Antipasti-Platte', 1, 1);
+insert into BESTELLUNG values (50, 0.0, 0, 1, CURRENT_TIMESTAMP, null, 'Sprudel', 1, 1);
+insert into BESTELLUNG values (51, 0.0, 0, 1, CURRENT_TIMESTAMP, null, 'Zwiebelrostbraten mit Spätzle', 2, 2);
+insert into BESTELLUNG values (52, 0.0, 0, 1, CURRENT_TIMESTAMP, null, 'Chili con carne mit ofenfrischem Baguette', 1, 4);
+insert into BESTELLUNG values (53, 0.0, 0, 1, CURRENT_TIMESTAMP, null, 'Chili con carne mit ofenfrischem Baguette', 2, 6);
+insert into BESTELLUNG values (54, 0.0, 0, 1, CURRENT_TIMESTAMP, null, 'grünes Thai-Curry mit Reis und Gemüse', 2, 8);

@@ -182,6 +182,7 @@ create table Abrechnung(
 );
 
 create table Bestellung(
+                           bestellnr int primary key not null,
                            aufpreis number default 0,
                            reklamiert number(1) default 0 not null,
                            fertig number(1) default 0 not null,
@@ -190,6 +191,5 @@ create table Bestellung(
                            fk_gericht_name varchar2(100) references Gericht(name) not null,
                            fk_person_platz int not null,
                            fk_person_tisch int not null,
-                           foreign key (fk_person_platz, fk_person_tisch) references Person(platz, fk_tisch_nummer),
-                           primary key (fk_abrechnung_rechnungsnr, fk_gericht_name, fk_person_platz, fk_person_tisch)
+                           foreign key (fk_person_platz, fk_person_tisch) references Person(platz, fk_tisch_nummer)
 );
