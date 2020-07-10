@@ -864,6 +864,63 @@ insert into BESTELLUNG values (62, 0.0, 0, 1, '2020-02-13', null, 'Bier', 2, 8);
 
 -- Manipulationsfunktionen
 
+-- Alle Einkaufspreis-Daten würfeln
+create or replace procedure shuffleEinkaufspreisDates
+    is
+begin
+    for ein in (select * from EINKAUFSPREIS)
+        loop
+            update EINKAUFSPREIS e
+            set DATUM = (
+                SELECT TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
+                       DBMS_RANDOM.VALUE(0, TO_DATE('2020-07-10 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
+                       TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                FROM dual
+            )
+            where ein.PREIS = e.PREIS and ein.FK_LEBENSMITTEL_NAME = e.FK_LEBENSMITTEL_NAME;
+        end loop;
+end;
+
+call shuffleEinkaufspreisDates();
+
+-- Alle Kalkulations-Daten würfeln
+create or replace procedure shuffleKalkulationDates
+    is
+begin
+    for kal in (select * from KALKULATION)
+        loop
+            update KALKULATION k
+            set DATUM = (
+                SELECT TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
+                       DBMS_RANDOM.VALUE(0, TO_DATE('2020-07-10 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
+                       TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                FROM dual
+            )
+            where kal.GEWINNMARGE = k.GEWINNMARGE and kal.KOSTENMARGE = k.KOSTENMARGE and kal.FK_GERICHT_NAME = k.FK_GERICHT_NAME;
+        end loop;
+end;
+
+call shuffleKalkulationDates();
+
+-- Alle Tisch-Daten würfeln
+create or replace procedure shuffleTischZBDates
+    is
+begin
+    for tis in (select * from TISCH)
+        loop
+            update TISCH t
+            set ZULETZTBETREUT = (
+                SELECT TO_DATE('2020-07-10 20:00:00', 'YYYY-MM-DD HH24:MI:SS') +
+                       DBMS_RANDOM.VALUE(0, TO_DATE('2020-07-10 22:00:00', 'YYYY-MM-DD HH24:MI:SS') -
+                       TO_DATE('2020-07-10 20:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                FROM dual
+            )
+            where tis.NUMMER = t.NUMMER;
+        end loop;
+end;
+
+call shuffleTischZBDates();
+
 -- Alle Abrechnungs-Daten würfeln
 create or replace procedure shuffleAbrechnungDates
     is
