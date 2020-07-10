@@ -886,7 +886,6 @@ end;
 
 call shuffleAbrechnungDates();
 
--- TODO: Uhrzeit wird irgendwie grad nicht übernommen...
 -- Alle Bestellungs-Daten würfeln
 create or replace procedure shuffleBestellungDates
     is
@@ -895,13 +894,10 @@ begin
         loop
             update BESTELLUNG b
             set AUFGEGEBEN = (
-                select TO_DATE(
-                               TRUNC(
-                                       DBMS_RANDOM.VALUE(TO_CHAR(TIMESTAMP '2019-10-01 00:00:00','J')
-                                           ,TO_CHAR(TIMESTAMP '2020-07-10 23:59:59','J')
-                                           )
-                                   ),'J'
-                           ) from DUAL
+                SELECT TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
+                       DBMS_RANDOM.VALUE(0, TO_DATE('2020-07-10 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
+                       TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                FROM dual
             )
             where bes.BESTELLNR = b.BESTELLNR;
         end loop;
