@@ -861,3 +861,50 @@ insert into BESTELLUNG values (59, 0.0, 0, 1, '2020-02-13', null, 'Kürbiscremes
 insert into BESTELLUNG values (60, 0.0, 0, 1, '2020-02-13', null, 'Käsespätzle', 1, 4);
 insert into BESTELLUNG values (61, 0.0, 1, 1, '2020-02-13', null, 'Weißwein', 3, 8);
 insert into BESTELLUNG values (62, 0.0, 0, 1, '2020-02-13', null, 'Bier', 2, 8);
+
+-- Manipulationsfunktionen
+
+-- Alle Abrechnungs-Daten würfeln
+create or replace procedure shuffleAbrechnungDates
+    is
+begin
+    for abr in (select * from ABRECHNUNG)
+        loop
+            update ABRECHNUNG a
+            set DATUM = (
+                select TO_DATE(
+                               TRUNC(
+                                       DBMS_RANDOM.VALUE(TO_CHAR(DATE '2019-10-01','J')
+                                           ,TO_CHAR(DATE '2020-07-10','J')
+                                           )
+                                   ),'J'
+                           ) from DUAL
+            )
+            where abr.RECHNUNGSNR = a.RECHNUNGSNR;
+        end loop;
+end;
+
+call shuffleAbrechnungDates();
+
+-- TODO: Uhrzeit wird irgendwie grad nicht übernommen...
+-- Alle Bestellungs-Daten würfeln
+create or replace procedure shuffleBestellungDates
+    is
+begin
+    for bes in (select * from BESTELLUNG)
+        loop
+            update BESTELLUNG b
+            set AUFGEGEBEN = (
+                select TO_DATE(
+                               TRUNC(
+                                       DBMS_RANDOM.VALUE(TO_CHAR(TIMESTAMP '2019-10-01 00:00:00','J')
+                                           ,TO_CHAR(TIMESTAMP '2020-07-10 23:59:59','J')
+                                           )
+                                   ),'J'
+                           ) from DUAL
+            )
+            where bes.BESTELLNR = b.BESTELLNR;
+        end loop;
+end;
+
+call shuffleBestellungDates();
