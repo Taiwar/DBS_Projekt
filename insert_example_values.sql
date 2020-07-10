@@ -190,20 +190,520 @@ insert into EINKAUFSPREIS values (0.30, 'STK', 1, '2020-02-13', 'Baguette');
 
 
 -- Komponente
-insert into KOMPONENTE values ('Pommes', 1000, 'GRAMM', 'Pommes machen', 'POTAGER');
+-- name, grundmenge, einheit, langtext, kategorie
+insert into KOMPONENTE values ('Pommes', 1000, 'GRAMM', 'Pommes machen', 'ENTREMETIER');
 insert into KOMPONENTE values ('Schnitzel', 400, 'GRAMM', 'Schnitzel machen', 'ROTISSEUR');
 
--- LebensmittelMenge
+insert into KOMPONENTE values ('Blattsalat', 220, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Krautsalat', 220, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Kartoffelsalat', 220, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Tagiatelle gekocht', 2250, 'GRAMM', '', 'ENTREMETIER');
+--insert into KOMPONENTE values ('Käsespätzle', 400, 'GRAMM', '', 'ENTREMETIER');
+insert into KOMPONENTE values ('Tomatensoße', 2500, 'ML', '', 'SAUCIER');
+insert into KOMPONENTE values ('Bolognese', 3000, 'ML', '', 'SAUCIER');
+insert into KOMPONENTE values ('Bolognese scharf', 3200, 'ML', '', 'SAUCIER');
+--insert into KOMPONENTE values ('Garnelen aglio olio', 0, 'GRAMM', '', 'POISSONNIER');
+insert into KOMPONENTE values ('Baguette ofenfrisch', 200, 'GRAMM', '', 'ENTREMETIER');
+insert into KOMPONENTE values ('Apfelküchle', 4, 'STK', '', 'PATISSIER');
+insert into KOMPONENTE values ('Kugel Vanilleeis', 1, 'STK', '', 'PATISSIER');
+insert into KOMPONENTE values ('Heiße Himbeeren', 200, 'GRAMM', '', 'PATISSIER');
+insert into KOMPONENTE values ('Spargel püriert', 1000, 'ML', '', 'POTAGER');
+insert into KOMPONENTE values ('Spargel gekocht', 200, 'GRAMM', '', 'POTAGER');
+insert into KOMPONENTE values ('Kürbis püriert', 1000, 'ML', '', 'POTAGER');
+insert into KOMPONENTE values ('Kürbis gestückelt', 200, 'GRAMM', '', 'POTAGER');
+insert into KOMPONENTE values ('Zwiebeln gewürfelt', 200, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Knoblauch gewürfelt', 200, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Zitronensaft', 100, 'ML', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Zitronenschale', 5, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Galgant gerieben', 50, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Fleischbrühe mit Kartoffeln', 10000, 'ML', '', 'POTAGER');
+insert into KOMPONENTE values ('Fleischbrühe', 10000, 'GRAMM', '', 'POTAGER');
+insert into KOMPONENTE values ('Tomaten-Mozarella', 200, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('geöffnete Austern', 6, 'STK', '', 'POISSONNIER');
+insert into KOMPONENTE values ('Gulasch gebraten', 2000, 'GRAMM', '', 'ROTISSEUR');
+insert into KOMPONENTE values ('Geschnetzeltes gebraten', 1500, 'GRAMM', '', 'ROTISSEUR');
+insert into KOMPONENTE values ('Totiglioni gekocht', 2200, 'GRAMM', '', 'ENTREMETIER');
+insert into KOMPONENTE values ('Schweinemedaillons gebraten', 12, 'STK', '', 'ROTISSEUR');
+insert into KOMPONENTE values ('Kartoffeln gekocht/geschält', 5000, 'GRAMM', '', 'ENTREMETIER');
+insert into KOMPONENTE values ('Flädle', 10, 'STK', '', 'ENTREMETIER');
+insert into KOMPONENTE values ('Rostbraten gebraten', 1, 'STK', '', 'ROTISSEUR');
+insert into KOMPONENTE values ('Spaghetti gekocht', 2300, 'GRAMM', '', 'ENTREMETIER');
+insert into KOMPONENTE values ('Spätzle', 2000, 'GRAMM', '', 'ENTREMETIER');
+insert into KOMPONENTE values ('Fleischküchle gebraten', 10, 'STK', '', 'ROTISSEUR');
+--insert into KOMPONENTE values ('Brühe', 400, 'GRAMM', '', 'POTAGER');
+insert into KOMPONENTE values ('Bohnen/Mais-Mischung', 600, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Röstzwiebeln', 350, 'GRAMM', '', 'ROTISSEUR');
+insert into KOMPONENTE values ('Bratensoße', 2000, 'ML', '', 'SAUCIER');
+insert into KOMPONENTE values ('Salatdressing (standard)', 200, 'ML', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Salatdressing (joghurt)', 200, 'ML', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Jasminreis gekocht', 2000, 'GRAMM', '', 'ENTREMETIER');
+insert into KOMPONENTE values ('Weißweinsoße', 2500, 'ML', '', 'SAUCIER');
+insert into KOMPONENTE values ('Rahmsoße', 2000, 'ML', '', 'SAUCIER');
+insert into KOMPONENTE values ('Pilzrahmsoße', 2000, 'ML', '', 'SAUCIER');
+insert into KOMPONENTE values ('Kroketten fritiert', 50, 'STK', '', 'ENTREMETIER');
+insert into KOMPONENTE values ('Thai Curry Soße', 2300, 'ML', '', 'SAUCIER');
+insert into KOMPONENTE values ('Agio Olio', 350, 'ML', '', 'SAUCIER');
+insert into KOMPONENTE values ('Garnelen eingelegt', 600, 'GRAMM', '', 'POISSONNIER');
+insert into KOMPONENTE values ('Carbonara Soße', 800, 'ML', '', 'SAUCIER');
+insert into KOMPONENTE values ('Käsesoße', 1000, 'ML', '', 'POISSONNIER');
+insert into KOMPONENTE values ('Zitronenscheibe', 14, 'STK', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('1/4 Weißwein', 250, 'ML', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('1/4 Rotwein', 250, 'ML', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Glas Bier', 500, 'ML', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Apfelrotkraut', 400, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Semmelknödel', 3, 'STK', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Tomaten püriert', 900, 'GRAMM', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('Pilzzubereitung', 450, 'GRAMM', '', 'SAUCIER');
+insert into KOMPONENTE values ('Apfelküchle', 4, 'STK', '', 'PATISSIER');
+
+-- LebensMittelMenge
+-- lebensmittel_name, komponente_name, menge, einheit
 insert into LEBENSMITTELMENGE values ('Kartoffeln', 'Pommes', 1000, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Schweinesteak', 'Schnitzel', 400, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Frittierfett', 'Pommes', 200, 'GRAMM');
 
+-- Blattsalat
+insert into LEBENSMITTELMENGE values ('Kopfsalat', 'Blattsalat', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Senf (mittelscharf)', 'Blattsalat', 8, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Blattsalat', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Wasser', 'Blattsalat', 50, 'ML');
+insert into LEBENSMITTELMENGE values ('Essig', 'Blattsalat', 60, 'ML');
+insert into LEBENSMITTELMENGE values ('Salz', 'Blattsalat', 6, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Olivenöl', 'Blattsalat', 80, 'ML');
+-- Krautsalat
+insert into LEBENSMITTELMENGE values ('Weißkohl', 'Krautsalat', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Senf (mittelscharf)', 'Krautsalat', 8, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Krautsalat', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Wasser', 'Krautsalat', 50, 'ML');
+insert into LEBENSMITTELMENGE values ('Essig', 'Krautsalat', 60, 'ML');
+insert into LEBENSMITTELMENGE values ('Salz', 'Krautsalat', 6, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Olivenöl', 'Krautsalat', 80, 'ML');
+insert into LEBENSMITTELMENGE values ('Kümmel', 'Krautsalat', 10, 'GRAMM');
+-- Kartoffelsalat
+insert into LEBENSMITTELMENGE values ('Kartoffeln', 'Kartoffelsalat', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Senf (mittelscharf)', 'Kartoffelsalat', 16, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Kartoffelsalat', 50, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Kartoffelsalat', 10, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Kartoffelsalat', 6, 'GRAMM');
+-- Salatdressing (standard)
+insert into LEBENSMITTELMENGE values ('Senf (mittelscharf)', 'Salatdressing (standard)', 8, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Salatdressing (standard)', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Wasser', 'Salatdressing (standard)', 50, 'ML');
+insert into LEBENSMITTELMENGE values ('Essig', 'Salatdressing (standard)', 60, 'ML');
+insert into LEBENSMITTELMENGE values ('Salz', 'Salatdressing (standard)', 6, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Olivenöl', 'Salatdressing (standard)', 80, 'ML');
+-- Salatdressing (joghurt)
+insert into LEBENSMITTELMENGE values ('Senf (mittelscharf)', 'Salatdressing (joghurt)', 8, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Salatdressing (joghurt)', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Wasser', 'Salatdressing (joghurt)', 50, 'ML');
+insert into LEBENSMITTELMENGE values ('Essig', 'Salatdressing (joghurt)', 60, 'ML');
+insert into LEBENSMITTELMENGE values ('Salz', 'Salatdressing (joghurt)', 6, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Olivenöl', 'Salatdressing (joghurt)', 80, 'ML');
+insert into LEBENSMITTELMENGE values ('Joghurt (natur)', 'Salatdressing (joghurt)', 20, 'GRAMM');
+-- Tagiatelle gekocht
+insert into LEBENSMITTELMENGE values ('Wasser', 'Tagiatelle gekocht', 8000, 'ML');
+insert into LEBENSMITTELMENGE values ('Salz', 'Tagiatelle gekocht', 40, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Tagiatelle', 'Tagiatelle gekocht', 1000, 'GRAMM');
+-- Käsespätzle
+
+-- Tomatensoße
+insert into LEBENSMITTELMENGE values ('Tomaten', 'Tomatensoße', 2000, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Basilikum', 'Tomatensoße', 50, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Tomatensoße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Tomatensoße', 50, 'GRAMM');
+-- Bolognese
+insert into LEBENSMITTELMENGE values ('Hackfleisch Rind', 'Bolognese', 500, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Hackfleisch Schwein', 'Bolognese', 500, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Tomaten', 'Bolognese', 1600, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Bolognese', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Bolognese', 60, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Basilikum', 'Bolognese', 50, 'GRAMM');
+-- Bolognese scharf
+insert into LEBENSMITTELMENGE values ('Hackfleisch Rind', 'Bolognese', 500, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Hackfleisch Schwein', 'Bolognese', 500, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Tomaten', 'Bolognese', 1600, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Bolognese', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Bolognese', 60, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Basilikum', 'Bolognese', 50, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Jalapenos (geschnitten)', 'Bolognese', 150, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Chillischoten', 'Bolognese', 10, 'GRAMM');
+-- Garnelen aglio olio
+-- Baguette ofenfrisch
+insert into LEBENSMITTELMENGE values ('Baguette', 'Baguette ofenfrisch', 200, 'GRAMM');
+-- Apfelküchle
+insert into LEBENSMITTELMENGE values ('Äpfel', 'Apfelküchle', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zimt', 'Apfelküchle', 6, 'GRAMM');
+-- Kugel Vanilleeis
+insert into LEBENSMITTELMENGE values ('Vanilleeis', 'Kugel Vanilleeis', 80, 'GRAMM');
+-- Heiße Himbeeren
+insert into LEBENSMITTELMENGE values ('Himbeeren TK', 'Heiße Himbeeren', 200, 'GRAMM');
+-- Spargel püriert
+insert into LEBENSMITTELMENGE values ('Spargel', 'Spargel püriert', 1000, 'GRAMM');
+-- Spargel gekocht
+insert into LEBENSMITTELMENGE values ('Spargel', 'Spargel gekocht', 200, 'GRAMM');
+-- Kürbis püriert
+insert into LEBENSMITTELMENGE values ('Kürbis', 'Kürbis püriert', 1000, 'GRAMM');
+-- Kürbis gestückelt
+insert into LEBENSMITTELMENGE values ('Kürbis', 'Kürbis gestückelt', 200, 'GRAMM');
+-- Zwiebeln gewürfelt
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Zwiebeln gewürfelt', 200, 'GRAMM');
+-- Knoblauch gewürfelt
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Knoblauch gewürfelt', 200, 'GRAMM');
+-- Zitronensaft
+insert into LEBENSMITTELMENGE values ('Zitronen', 'Zitronensaft', 20, 'ML');
+-- Zitronenschale
+insert into LEBENSMITTELMENGE values ('Zitronen', 'Zitronenschale', 5, 'GRAMM');
+-- Galgant gerieben
+insert into LEBENSMITTELMENGE values ('Galgant', 'Galgant gerieben', 50, 'GRAMM');
+-- Fleischbrühe mit Kartoffeln
+insert into LEBENSMITTELMENGE values ('Wasser', 'Fleischbrühe mit Kartoffeln', 8000, 'ML');
+insert into LEBENSMITTELMENGE values ('Karotten', 'Fleischbrühe mit Kartoffeln', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Kartoffeln', 'Fleischbrühe mit Kartoffeln', 300, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Fleischbrühe mit Kartoffeln', 10, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Fleischbrühe mit Kartoffeln', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knollensellerie', 'Fleischbrühe mit Kartoffeln', 150, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Fleischknochen', 'Fleischbrühe mit Kartoffeln', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Markknochen', 'Fleischbrühe mit Kartoffeln', 250, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Lauch', 'Fleischbrühe mit Kartoffeln', 50, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Fleischbrühe mit Kartoffeln', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Fleischbrühe mit Kartoffeln', 20, 'GRAMM');
+-- Fleischbrühe
+insert into LEBENSMITTELMENGE values ('Wasser', 'Fleischbrühe mit Kartoffeln', 8000, 'ML');
+insert into LEBENSMITTELMENGE values ('Karotten', 'Fleischbrühe mit Kartoffeln', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Kartoffeln', 'Fleischbrühe mit Kartoffeln', 300, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Fleischbrühe mit Kartoffeln', 10, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Fleischbrühe mit Kartoffeln', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knollensellerie', 'Fleischbrühe mit Kartoffeln', 150, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Fleischknochen', 'Fleischbrühe mit Kartoffeln', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Markknochen', 'Fleischbrühe mit Kartoffeln', 250, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Lauch', 'Fleischbrühe mit Kartoffeln', 50, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Fleischbrühe mit Kartoffeln', 20, 'GRAMM');
+-- Tomaten-Mozarella
+insert into LEBENSMITTELMENGE values ('Tomaten', 'Tomaten-Mozarella', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Büffelmozarella', 'Tomaten-Mozarella', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Balsamico', 'Tomaten-Mozarella', 20, 'ML');
+-- geöffnete Austern
+insert into LEBENSMITTELMENGE values ('Austern', 'geöffnete Austern', 6, 'STK');
+-- Gulasch gebraten
+insert into LEBENSMITTELMENGE values ('Oberschale vom Rind', 'Gulasch gebraten', 2000, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Olivenöl', 'Gulasch gebraten', 100, 'ML');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Gulasch gebraten', 150, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Gulasch gebraten', 30, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Gulasch gebraten', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Paprikapulver edelsüß', 'Gulasch gebraten', 30, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Paprikapulver rosenscharf', 'Gulasch gebraten', 30, 'GRAMM');
+-- Geschnetzeltes gebraten
+insert into LEBENSMITTELMENGE values ('Schweinefilet', 'Geschnetzeltes gebraten', 1500, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Geschnetzeltes gebraten', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Geschnetzeltes gebraten', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Geschnetzeltes gebraten', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Butterschmalz', 'Schweinemedaillons gebraten', 50, 'GRAMM');
+-- Totiglioni gekocht
+insert into LEBENSMITTELMENGE values ('Wasser', 'Totiglioni gekocht', 8000, 'ML');
+insert into LEBENSMITTELMENGE values ('Salz', 'Totiglioni gekocht', 40, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Totiglioni', 'Totiglioni gekocht', 1000, 'GRAMM');
+-- Schweinemedaillons gebraten
+insert into LEBENSMITTELMENGE values ('Schweinefilet', 'Schweinemedaillons gebraten', 1500, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Schweinemedaillons gebraten', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Schweinemedaillons gebraten', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Schweinemedaillons gebraten', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Butterschmalz', 'Schweinemedaillons gebraten', 50, 'GRAMM');
+-- Kartoffeln gekocht/geschält
+insert into LEBENSMITTELMENGE values ('Kartoffeln', 'Kartoffeln gekocht/geschält', 5000, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Wasser', 'Kartoffeln gekocht/geschält', 8000, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Kartoffeln gekocht/geschält', 20, 'GRAMM');
+-- Flädle
+insert into LEBENSMITTELMENGE values ('Mehl', 'Flädle', 300, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Milch', 'Flädle', 600, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Eier', 'Flädle', 8, 'STK');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Flädle', 80, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Olivenöl', 'Flädle', 8, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Flädle', 8, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Schnittlauch', 'Flädle', 20, 'GRAMM');
+-- Rostbraten gebraten
+insert into LEBENSMITTELMENGE values ('Entrecote', 'Rostbraten gebraten', 350, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Rostbraten gebraten', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Rostbraten gebraten', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Rostbraten gebraten', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Rostbraten gebraten', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Rostbraten gebraten', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Butterschmalz', 'Rostbraten gebraten', 20, 'GRAMM');
+-- Spaghetti gekocht
+insert into LEBENSMITTELMENGE values ('Wasser', 'Spaghetti gekocht', 8000, 'ML');
+insert into LEBENSMITTELMENGE values ('Salz', 'Spaghetti gekocht', 40, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Spaghetti', 'Spaghetti gekocht', 1000, 'GRAMM');
+-- Spätzle
+insert into LEBENSMITTELMENGE values ('Wasser', 'Spätzle', 8440, 'ML');
+insert into LEBENSMITTELMENGE values ('Salz', 'Spätzle', 40, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Mehl', 'Spätzle', 800, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Eier', 'Spätzle', 8, 'STK');
+insert into LEBENSMITTELMENGE values ('Salz', 'Spätzle', 6, 'GRAMM');
+-- Fleischküchle gebraten
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Fleischküchle gebraten', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Hackfleisch Rind', 'Fleischküchle gebraten', 500, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Hackfleisch Schwein', 'Fleischküchle gebraten', 500, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Petersilie', 'Fleischküchle gebraten', 40, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Senf (mittelscharf)', 'Fleischküchle gebraten', 90, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Paprikapulver rosenscharf', 'Fleischküchle gebraten', 12, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Weißbrot', 'Fleischküchle gebraten', 300, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Fleischküchle gebraten', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Fleischküchle gebraten', 15, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Butterschmalz', 'Fleischküchle gebraten', 40, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Eier', 'Fleischküchle gebraten', 6, 'STK');
+-- Brühe
+-- Bohnen/Mais-Mischung
+insert into LEBENSMITTELMENGE values ('Kidney Bohnen', 'Bohnen/Mais-Mischung', 400, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Mais', 'Bohnen/Mais-Mischung', 200, 'GRAMM');
+-- Röstzwiebeln
+insert into LEBENSMITTELMENGE values ('Butterschmalz', 'Röstzwiebeln', 300, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Mehl', 'Röstzwiebeln', 35, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Röstzwiebeln', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Röstzwiebeln', 6, 'GRAMM');
+-- Bratensoße
+insert into LEBENSMITTELMENGE values ('Rotwein', 'Bratensoße', 200, 'ML');
+insert into LEBENSMITTELMENGE values ('Mehl', 'Bratensoße', 90, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Karotten', 'Bratensoße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Markknochen', 'Bratensoße', 400, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Wasser', 'Bratensoße', 2000, 'ML');
+insert into LEBENSMITTELMENGE values ('Salz', 'Bratensoße', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Bratensoße', 10, 'GRAMM');
+-- Jasminreis gekocht
+insert into LEBENSMITTELMENGE values ('Wasser', 'Jasminreis gekocht', 8000, 'ML');
+insert into LEBENSMITTELMENGE values ('Salz', 'Jasminreis gekocht', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Jasminreis', 'Jasminreis gekocht', 1000, 'GRAMM');
+-- Weißweinsoße
+insert into LEBENSMITTELMENGE values ('Weißwein', 'Weißweinsoße', 1000, 'ML');
+insert into LEBENSMITTELMENGE values ('Wasser', 'Weißweinsoße', 2000, 'ML');
+insert into LEBENSMITTELMENGE values ('Zitronen', 'Weißweinsoße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Weißweinsoße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Sahne', 'Weißweinsoße', 400, 'GRAMM');
+-- Rahmsoße
+insert into LEBENSMITTELMENGE values ('Wasser', 'Rahmsoße', 2000, 'ML');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Rahmsoße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Sahne', 'Rahmsoße', 400, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Rahmsoße', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Rahmsoße', 10, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Mehl', 'Rahmsoße', 40, 'GRAMM');
+-- Pilzrahmsoße
+insert into LEBENSMITTELMENGE values ('Wasser', 'Pilzrahmsoße', 2000, 'ML');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Pilzrahmsoße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Sahne', 'Pilzrahmsoße', 400, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Pilzrahmsoße', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Pilzrahmsoße', 10, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Mehl', 'Pilzrahmsoße', 40, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfifferlinge', 'Pilzrahmsoße', 40, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Champignon (weiß)', 'Pilzrahmsoße', 40, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Champignon (braun)', 'Pilzrahmsoße', 40, 'GRAMM');
+-- Kroketten frittiert
+insert into LEBENSMITTELMENGE values ('Kroketten', 'Kroketten frittiert', 1000, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Frittierfett', 'Kroketten frittiert', 200, 'GRAMM');
+-- Thai Curry Soße
+insert into LEBENSMITTELMENGE values ('Kokosnussmilch', 'Thai Curry Soße', 1000, 'ML');
+insert into LEBENSMITTELMENGE values ('Galgant', 'Thai Curry Soße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Thai Curry Soße', 300, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Thai Curry Soße', 80, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zitronengras', 'Thai Curry Soße', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Chillischoten', 'Thai Curry Soße', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Petersilie', 'Thai Curry Soße', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zitronen', 'Thai Curry Soße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Fischsauce', 'Thai Curry Soße', 40, 'ML');
+insert into LEBENSMITTELMENGE values ('Kräuterseitlinge', 'Thai Curry Soße', 400, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Wasser', 'Thai Curry Soße', 1500, 'ML');
+insert into LEBENSMITTELMENGE values ('Erdnussöl', 'Thai Curry Soße', 150, 'ML');
+insert into LEBENSMITTELMENGE values ('Zucker', 'Thai Curry Soße', 50, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Thai Curry Soße', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Thai Curry Soße', 20, 'GRAMM');
+-- Agio Olio
+insert into LEBENSMITTELMENGE values ('Olivenöl', 'Agio Olio', 200, 'ML');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Agio Olio', 80, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Petersilie', 'Agio Olio', 100, 'GRAMM');
+-- Garnelen eingelegt
+insert into LEBENSMITTELMENGE values ('Garnelen', 'Garnelen eingelegt', 250, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zitronen', 'Garnelen eingelegt', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Basilikum', 'Garnelen eingelegt', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Garnelen eingelegt', 50, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Olivenöl', 'Garnelen eingelegt', 200, 'ML');
+-- Carbonara Soße
+insert into LEBENSMITTELMENGE values ('Speck', 'Carbonara Soße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Parmesan', 'Carbonara Soße', 400, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Eier', 'Carbonara Soße', 4, 'STK');
+insert into LEBENSMITTELMENGE values ('Sahne', 'Carbonara Soße', 40, 'ML');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Carbonara Soße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Carbonara Soße', 20, 'GRAMM');
+-- Käsesoße
+insert into LEBENSMITTELMENGE values ('', 'Käsesoße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('', 'Käsesoße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('', 'Käsesoße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('', 'Käsesoße', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('', 'Käsesoße', 200, 'GRAMM');
+-- Zitronenscheibe
+insert into LEBENSMITTELMENGE values ('Zitronen', 'Zitronenscheibe', 200, 'GRAMM');
+-- 1/4 Weißwein
+insert into LEBENSMITTELMENGE values ('Weißwein', '1/4 Weißwein', 250, 'ML');
+-- 1/4 Rotwein
+insert into LEBENSMITTELMENGE values ('Rotwein', '1/4 Rotwein', 250, 'ML');
+-- Glas Bier
+insert into LEBENSMITTELMENGE values ('Bier', 'Glas Bier', 500, 'ML');
+-- Apflerotkraut
+insert into LEBENSMITTELMENGE values ('Äpfel', 'Apflerotkraut', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Rotkohl', 'Apflerotkraut', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Apflerotkraut', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Apflerotkraut', 10, 'GRAMM');
+-- Semmelknödel
+insert into LEBENSMITTELMENGE values ('Weißbrot', 'Semmelknödel', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Semmelbrösel', 'Semmelknödel', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Mehl', 'Semmelknödel', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Eier', 'Semmelknödel', 4, 'STK');
+-- Tomaten püriert
+insert into LEBENSMITTELMENGE values ('Tomaten', 'Tomaten püriert', 1000, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Salz', 'Tomaten püriert', 20, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfeffer', 'Tomaten püriert', 10, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Basilikum', 'Tomaten püriert', 20, 'GRAMM');
+-- Pilzzubereitung
+insert into LEBENSMITTELMENGE values ('Champignon (weiß)', 'Pilzzubereitung', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Champignon (braun)', 'Pilzzubereitung', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Pfifferlinge', 'Pilzzubereitung', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Kräuterseitlinge', 'Pilzzubereitung', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Pilzzubereitung', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knoblauch', 'Pilzzubereitung', 20, 'GRAMM');
+-- Apfelküchle
+
 -- Gericht
+-- name, aktiviert, standard, aktivierteTage, aktivierungsDatum, kategorie, langtext, zubereitungsdauer
 insert into GERICHT values ('Schnitzel mit Pommes', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', 'Pommes und Schnitzel zusammen auf Teller', 12.0);
 
+insert into GERICHT values ('Chili con carne mit ofenfrischem Baguette', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 5.0);
+insert into GERICHT values ('Fleischküchle mit Kartoffelsalat', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 12.0);
+insert into GERICHT values ('Schweinemedaillons mit Kroketten in Rahmsoße', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 10.0);
+insert into GERICHT values ('Pilzrahmgeschnetzeltes mit Spätzle', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 14.0);
+insert into GERICHT values ('Zwiebelrostbraten mit Spätzle', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 15.0);
+insert into GERICHT values ('grünes Thai-Curry mit Reis und Gemüse', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 5.0);
+insert into GERICHT values ('ofengegarte Austern', 1, 1, 30, '2020-03-01', 'VORSPEISE', '', 20.0);
+insert into GERICHT values ('Bio-Garnelen "aglio olio" mit Baguette', 1, 1, 30, '2020-03-01', 'VORSPEISE', '', 10.0);
+insert into GERICHT values ('Flädlessuppe', 1, 1, 30, '2020-03-01', 'VORSPEISE', '', 5.0);
+insert into GERICHT values ('Geißburger Marsch dazu Spätzle', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 5.0);
+insert into GERICHT values ('Käsespätzle', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 8.0);
+insert into GERICHT values ('Spargelcremesuppe', 1, 1, 30, '2020-03-01', 'VORSPEISE', '', 4.0);
+insert into GERICHT values ('Kürbiscremesuppe', 1, 1, 30, '2020-03-01', 'VORSPEISE', '', 4.0);
+insert into GERICHT values ('Gratinierte Spargelpfannkuchen', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 18.0);
+insert into GERICHT values ('Pilzrisotto aus Kräuterseitlingen', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 16.0);
+insert into GERICHT values ('Rindergulasch dazu Semmelknödel und Rotkraut', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 8.0);
+insert into GERICHT values ('Antipasti-Platte', 1, 1, 30, '2020-03-01', 'VORSPEISE', '', 12.0);
+insert into GERICHT values ('Zimtapfelküchle', 1, 1, 30, '2020-03-01', 'NACHTISCH', '', 13.0);
+insert into GERICHT values ('Heiße Liebe', 1, 1, 30, '2020-03-01', 'NACHTISCH', '', 11.0);
+insert into GERICHT values ('Salatteller', 1, 1, 30, '2020-03-01', 'VORSPEISE', '', 7.0);
+insert into GERICHT values ('großer Salat mit Putenstreifen', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 12.0);
+insert into GERICHT values ('Spaghetti Bolognese', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 8.0);
+insert into GERICHT values ('Tomatensuppe', 1, 1, 30, '2020-03-01', 'VORSPEISE', '', 4.0);
+insert into GERICHT values ('Tagiatelle in Garnelen Tomatensoße', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 11.0);
+insert into GERICHT values ('Spaghetti Carbonara', 1, 1, 30, '2020-03-01', 'HAUPTGERICHT', '', 12.0);
+insert into GERICHT values ('Sprudel', 1, 1, 30, '2020-03-01', 'GETRAENK', '', 2.0);
+insert into GERICHT values ('Weißwein', 1, 1, 30, '2020-03-01', 'GETRAENK', '', 2.0);
+insert into GERICHT values ('Rotwein', 1, 1, 30, '2020-03-01', 'GETRAENK', '', 2.0);
+insert into GERICHT values ('Bier', 1, 1, 30, '2020-03-01', 'GETRAENK', '', 2.0);
+
+
 -- KomponentenMenge
+-- komponente_name, gericht_name, menge, einheit
 insert into KOMPONENTENMENGE values ('Pommes', 'Schnitzel mit Pommes', 300, 'GRAMM');
 insert into KOMPONENTENMENGE values ('Schnitzel', 'Schnitzel mit Pommes', 400, 'GRAMM');
+-- Chili con carne
+insert into KOMPONENTENMENGE values ('Bolognese scharf', 'Chili con carne mit ofenfrischem Baguette', 300, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Baguette ofenfrisch', 'Chili con carne mit ofenfrischem Baguette', 200, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Bohnen/Mais-Mischung', 'Chili con carne mit ofenfrischem Baguette', 100, 'GRAMM');
+-- Fleischküchle mit Kartoffelsalat
+insert into KOMPONENTENMENGE values ('Fleischküchle gebraten', 'Fleischküchle mit Kartoffelsalat', 2, 'STK');
+insert into KOMPONENTENMENGE values ('Kartoffelsalat', 'Fleischküchle mit Kartoffelsalat', 300, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Bratensoße', 'Fleischküchle mit Kartoffelsalat', 100, 'ML');
+-- Schweinemedaillons mit Kroketten in Rahmsoße
+insert into KOMPONENTENMENGE values ('Schweinemedaillons gebraten', 'Schweinemedaillons mit Kroketten in Rahmsoße', 3, 'STK');
+insert into KOMPONENTENMENGE values ('Kroketten fritiert', 'Schweinemedaillons mit Kroketten in Rahmsoße', 6, 'STK');
+insert into KOMPONENTENMENGE values ('Rahmsoße', 'Schweinemedaillons mit Kroketten in Rahmsoße', 150, 'ML');
+-- Pilzrahmgeschnetzeltes mit Spätzle
+insert into KOMPONENTENMENGE values ('Pilzrahmsoße', 'Pilzrahmgeschnetzeltes mit Spätzle', 150, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Geschnetzeltes gebraten', 'Pilzrahmgeschnetzeltes mit Spätzle', 250, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Spätzle', 'Pilzrahmgeschnetzeltes mit Spätzle', 300, 'GRAMM');
+-- Zwiebelrostbraten mit Spätzle
+insert into KOMPONENTENMENGE values ('Rostbraten', 'Zwiebelrostbraten mit Spätzle', 1, 'STK');
+insert into KOMPONENTENMENGE values ('Spätzle', 'Zwiebelrostbraten mit Spätzle', 300, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Bratensoße', 'Zwiebelrostbraten mit Spätzle', 200, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Röstzwiebeln', 'Zwiebelrostbraten mit Spätzle', 50, 'GRAMM');
+-- grünes Thai-Curry mit Reis und Gemüse
+insert into KOMPONENTENMENGE values ('Jasminreis gekocht', 'grünes Thai-Curry mit Reis und Gemüse', 250, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Thai Curry Soße', 'grünes Thai-Curry mit Reis und Gemüse', 400, 'ML');
+-- ofengegarte Austern
+insert into KOMPONENTENMENGE values ('geöffnete Austern', 'ofengegarte Austern', 6, 'STK');
+-- Bio-Garnelen "aglio olio" mit Baguette
+insert into KOMPONENTENMENGE values ('Agio Olio', 'Bio-Garnelen "aglio olio" mit Baguette', 200, 'ML');
+insert into KOMPONENTENMENGE values ('Garnelen eingelegt', 'Bio-Garnelen "aglio olio" mit Baguette', 400, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Baguette ofenfrisch', 'Bio-Garnelen "aglio olio" mit Baguette', 200, 'GRAMM');
+-- Flädlessuppe
+insert into KOMPONENTENMENGE values ('Fleischbrühe', 'Flädlessuppe', 400, 'ML');
+insert into KOMPONENTENMENGE values ('Flädle', 'Flädlessuppe', 1, 'STK');
+-- Geißburger Marsch dazu Spätzle
+insert into KOMPONENTENMENGE values ('Fleischbrühe mit Kartoffeln', 'Geißburger Marsch dazu Spätzle', 400, 'ML');
+insert into KOMPONENTENMENGE values ('Spätzle', 'Geißburger Marsch dazu Spätzle', 150, 'GRAMM');
+-- Käsespätzle
+insert into KOMPONENTENMENGE values ('Spätzle', 'Käsespätzle', 300, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Käsesoße', 'Käsespätzle', 200, 'ML');
+insert into KOMPONENTENMENGE values ('Röstzwiebeln', 'Zwiebelrostbraten mit Spätzle', 50, 'GRAMM');
+-- Spargelcremesuppe
+insert into KOMPONENTENMENGE values ('Spargel gekocht', 'Spargelcremesuppe', 50, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Spargel püriert', 'Spargelcremesuppe', 100, 'ML');
+--insert into KOMPONENTENMENGE values ('Fleischbrühe', 'Spargelcremesuppe', 400, 'GRAMM');
+-- Kürbiscremesuppe
+insert into KOMPONENTENMENGE values ('Kürbis püriert', 'Kürbiscremesuppe', 100, 'ML');
+insert into KOMPONENTENMENGE values ('Kürbis gestückelt', 'Kürbiscremesuppe', 60, 'GRAMM');
+--insert into KOMPONENTENMENGE values ('Fleischbrühe', 'Kürbiscremesuppe', 400, 'ML');
+-- Gratinierte Spargelpfannkuchen
+insert into KOMPONENTENMENGE values ('Spargel gekocht', 'Gratinierte Spargelpfannkuchen', 400, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Flädle', 'Gratinierte Spargelpfannkuchen', 3, 'STK');
+-- Pilzrisotto aus Kräuterseitlingen
+insert into KOMPONENTENMENGE values ('Jasminreis gekocht', 'Pilzrisotto aus Kräuterseitlingen', 150, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Pilzzubereitung', 'Pilzrisotto aus Kräuterseitlingen', 200, 'GRAMM');
+-- Rindergulasch dazu Semmelknödel und Rotkraut
+insert into KOMPONENTENMENGE values ('Gulasch gebraten', 'Rindergulasch dazu Semmelknödel und Rotkraut', 200, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Semmelknödel', 'Rindergulasch dazu Semmelknödel und Rotkraut', 2, 'STK');
+insert into KOMPONENTENMENGE values ('Bratensoße', 'Rindergulasch dazu Semmelknödel und Rotkraut', 200, 'ML');
+insert into KOMPONENTENMENGE values ('Apfelrotkraut', 'Rindergulasch dazu Semmelknödel und Rotkraut', 150, 'GRAMM');
+-- Antipasti-Platte
+insert into KOMPONENTENMENGE values ('Tomate-Mozarella', 'Antipasti-Platte', 200, 'GRAMM');
+-- Zimtapfelküchle
+insert into KOMPONENTENMENGE values ('Kugel Vanilleeis', 'Zimtapfelküchle', 2, 'STK');
+insert into KOMPONENTENMENGE values ('Apfelküchle', 'Zimtapfelküchle', 1, 'STK');
+-- Heiße Liebe
+insert into KOMPONENTENMENGE values ('Kugel Vanilleeis', 'Heiße Liebe', 2, 'STK');
+insert into KOMPONENTENMENGE values ('Heiße Himbeeren', 'Heiße Liebe', 200, 'ML');
+-- Salatteller
+insert into KOMPONENTENMENGE values ('Kartoffelsalat', 'Salatteller', 50, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Krautsalat', 'Salatteller', 50, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Karottensalat', 'Salatteller', 50, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Blattsalat', 'Salatteller', 50, 'GRAMM');
+-- großer Salat mit Putenstreifen
+insert into KOMPONENTENMENGE values ('Blattsalat', 'großer Salat mit Putenstreifen', 120, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Geschnetzeltes gebraten', 'großer Salat mit Putenstreifen', 50, 'GRAMM');
+-- Spaghetti Bolognese
+insert into KOMPONENTENMENGE values ('Spaghetti gekocht', 'Spaghetti Bolognese', 250, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Bolognese', 'Spaghetti Bolognese', 150, 'ML');
+-- Tomatensuppe
+insert into KOMPONENTENMENGE values ('Fleischbrühe', 'Tomatensuppe', 100, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Tomaten püriert', 'Tomatensuppe', 50, 'GRAMM');
+-- Tagiatelle in Garnelen Tomatensoße
+insert into KOMPONENTENMENGE values ('Tomatensoße', 'Tagiatelle in Garnelen Tomatensoße', 200, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Spaghetti gekocht', 'Tagiatelle in Garnelen Tomatensoße', 250, 'GRAMM');
+insert into KOMPONENTENMENGE values ('Garnelen eingelegt', 'Tagiatelle in Garnelen Tomatensoße', 50, 'GRAMM');
+-- Spaghetti Carbonara
+insert into KOMPONENTENMENGE values ('Carbonara Soße', 'Spaghetti Carbonara', 40, 'ML');
+insert into KOMPONENTENMENGE values ('Spaghetti gekocht', 'Spaghetti Carbonara', 250, 'GRAMM');
+-- Bier
+insert into KOMPONENTENMENGE values ('Glas Bier', 'Bier', 500, 'ML');
+-- Weißwein
+insert into KOMPONENTENMENGE values ('1/4 Weißwein', 'Weißwein', 250, 'ML');
+-- Rotwein
+insert into KOMPONENTENMENGE values ('1/4 Rotwein', 'Rotwein', 250, 'ML');
+-- Sprudel
+insert into KOMPONENTENMENGE values ('Glas Sprudel', 'Sprudel', 200, 'ML');
+insert into KOMPONENTENMENGE values ('Zitronenscheibe', 'Sprudel', 1, 'STK');
 
 -- Kalkulation
 insert into KALKULATION values (30.0, 90.0, 1.5, 2, '2019-02-1', 'Schnitzel mit Pommes');
