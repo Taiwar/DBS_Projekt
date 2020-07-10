@@ -60,7 +60,8 @@ create table Komponente(
                                                  'ROTISSEUR',
                                                  'GARDEMANGER',
                                                  'POTAGER',
-                                                 'POISSONNIER'
+                                                 'POISSONNIER',
+                                                 'ENTREMETIER'
                                    )
                                )
 );
