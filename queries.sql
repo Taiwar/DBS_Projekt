@@ -10,24 +10,29 @@ order by K.GEWINNMARGE desc, K.VERKAUFSPREIS desc
 -- 2
 -- Kochreihenfolge generieren/Anzeige in der Küche bereitstellen: Sortiere Komponenten von nicht fertigen
 -- Bestellungen nach Aufgabe-Datum und Zubereitungsdauer. Filtere das Ergebnis nach Kategorie und Tisch und Person.
-select K.NAME, KM.MENGE, KM.EINHEIT, K.KATEGORIE, G.ZUBEREITUNGSDAUER, to_char(B.AUFGEGEBEN, 'HH:mm') "Aufgegeben"
+select K.NAME, KM.MENGE, KM.EINHEIT, K.KATEGORIE, G.ZUBEREITUNGSDAUER, to_char(B.AUFGEGEBEN, 'HH:mm') "Aufgegeben", B.FK_PERSON_TISCH "Tisch", B.FK_PERSON_PLATZ "Platz"
 from KOMPONENTENMENGE KM
          join KOMPONENTE K on KM.FK_KOMPONENTE_NAME = K.NAME
          join GERICHT G on KM.FK_GERICHT_NAME = G.NAME
          join BESTELLUNG B on B.FK_GERICHT_NAME = G.NAME
 where
-        B.FERTIG = 0
-        -- Filter auf Tisch und Person
-        -- and B.FK_PERSON_TISCH = 0 and
-        -- B.FK_PERSON_PLATZ = 0
-order by B.AUFGEGEBEN, G.ZUBEREITUNGSDAUER, K.KATEGORIE;
+        B.FERTIG = 0 and
+        K.KATEGORIE = 'GARDEMANGER'
+  -- Filter auf Tisch und Person
+  -- and B.FK_PERSON_TISCH = 0 and
+  -- B.FK_PERSON_PLATZ = 0
+order by B.AUFGEGEBEN, G.ZUBEREITUNGSDAUER;
 
 -- 3
 -- Welches Gericht aus der Kategorie „x“ hat sich in Bezug auf die aktivierten Tage am besten verkauft?
-select B.FK_GERICHT_NAME "Gericht", count(*) / G.AKTIVIERTETAGE as verkauft
+select distinct B.FK_GERICHT_NAME "Gericht", (
+    select count(*)
+    from BESTELLUNG
+    where FK_GERICHT_NAME = G.NAME
+) / G.AKTIVIERTETAGE as verkauft
 from BESTELLUNG B join GERICHT G on B.FK_GERICHT_NAME = G.NAME
-group by B.FK_GERICHT_NAME
-order by verkauft;
+where KATEGORIE = 'GETRAENK'
+order by verkauft desc;
 
 -- 4
 -- In welcher Kalenderwoche wurde der höchste Gewinn erzielt? Wieviel davon war Trinkgeld?
