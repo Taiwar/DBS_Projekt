@@ -872,9 +872,9 @@ begin
         loop
             update EINKAUFSPREIS e
             set DATUM = (
-                SELECT TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
-                       DBMS_RANDOM.VALUE(0, TO_DATE('2020-07-10 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
-                       TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                SELECT TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
+                       DBMS_RANDOM.VALUE(0, TO_DATE('2019-09-30 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
+                       TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
                 FROM dual
             )
             where ein.PREIS = e.PREIS and ein.FK_LEBENSMITTEL_NAME = e.FK_LEBENSMITTEL_NAME;
@@ -891,9 +891,9 @@ begin
         loop
             update KALKULATION k
             set DATUM = (
-                SELECT TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
-                       DBMS_RANDOM.VALUE(0, TO_DATE('2020-07-10 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
-                       TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                SELECT TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
+                       DBMS_RANDOM.VALUE(0, TO_DATE('2019-09-30 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
+                       TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
                 FROM dual
             )
             where kal.GEWINNMARGE = k.GEWINNMARGE and kal.KOSTENMARGE = k.KOSTENMARGE and kal.FK_GERICHT_NAME = k.FK_GERICHT_NAME;
