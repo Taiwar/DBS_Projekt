@@ -244,10 +244,10 @@ insert into KOMPONENTE values ('Garnelen eingelegt', 600, 'GRAMM', '', 'POISSONN
 insert into KOMPONENTE values ('Carbonara Soße', 800, 'ML', '', 'SAUCIER');
 insert into KOMPONENTE values ('Käsesoße', 1000, 'ML', '', 'POISSONNIER');
 insert into KOMPONENTE values ('Zitronenscheibe', 14, 'STK', '', 'GARDEMANGER');
-insert into KOMPONENTE values ('1/4 Weißwein', 250, 'ML', '', 'GARDEMANGER');
-insert into KOMPONENTE values ('1/4 Rotwein', 250, 'ML', '', 'GARDEMANGER');
-insert into KOMPONENTE values ('Glas Bier', 500, 'ML', '', 'GARDEMANGER');
-insert into KOMPONENTE values ('Glas Sprudel', 200, 'ML', '', 'GARDEMANGER');
+insert into KOMPONENTE values ('1/4 Weißwein', 250, 'ML', '', 'SERVICE');
+insert into KOMPONENTE values ('1/4 Rotwein', 250, 'ML', '', 'SERVICE');
+insert into KOMPONENTE values ('Glas Bier', 500, 'ML', '', 'SERVICE');
+insert into KOMPONENTE values ('Glas Sprudel', 200, 'ML', '', 'SERVICE');
 insert into KOMPONENTE values ('Apfelrotkraut', 400, 'GRAMM', '', 'GARDEMANGER');
 insert into KOMPONENTE values ('Semmelknödel', 3, 'STK', '', 'GARDEMANGER');
 insert into KOMPONENTE values ('Tomaten püriert', 900, 'GRAMM', '', 'GARDEMANGER');
