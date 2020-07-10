@@ -704,10 +704,73 @@ insert into KOMPONENTENMENGE values ('Glas Sprudel', 'Sprudel', 200, 'ML');
 insert into KOMPONENTENMENGE values ('Zitronenscheibe', 'Sprudel', 1, 'STK');
 
 -- Kalkulation
-insert into KALKULATION values (30.0, 90.0, 1.5, 2, '2019-02-1', 'Schnitzel mit Pommes');
 create or replace procedure createKalkulationen
     is
+    maximalVerkaufspreis number;
+    standardGewinnmarge number;
+    kostenmarge number;
+    verkaufspreis number;
+    gewinnmargeMax number;
+    gewinnmarge number;
+    maxVKTrue number;
 begin
+    -- Standardwerte setzen
+    maximalVerkaufspreis := 35.0;
+    standardGewinnmarge := 1.5;
+    kostenmarge := 2.0;
+    maxVKTrue := 0;
+    -- Für jeden aktuellen Einkaufspreis 3 Kalkulationen erstellen
+    for i in 1..3
+    loop
+        -- Für jeden aktuellen Einkaufspreis
+        for einkaufsPreis in (select * from AKTUELLEREINKAUFSPREISG)
+        loop
+            maxVKTrue := 0;
+            gewinnmargeMax := 0.0;
+            -- Verkaufpreis berechnen für Standardkalkulation
+            verkaufspreis := einkaufsPreis.PREIS * (standardGewinnmarge + 0.5 + kostenmarge);
+            -- Verkaufspreis darf einen maximalenen Verkaufspreis nicht übersteigen
+            if verkaufspreis >= maximalVerkaufspreis
+            then
+                -- Die Kosten sollten aber in jedem Fall gedeckt sein (wenn möglich)
+                verkaufspreis := einkaufsPreis.PREIS * kostenmarge;
+                if verkaufspreis >= maximalVerkaufspreis
+                then
+                    -- wenn keine Kostendeckung möglich ist, dann den maximalen Verkaufspreis verlangen
+                    verkaufspreis := maximalVerkaufspreis;
+                    maxVKTrue := 1;
+                else
+                    -- wenn eine Kostendeckung möglich ist, dann die maximal mögliche Gewinnmarge zum maximalen
+                    -- Verkaufspreis berechnen
+                    gewinnmargeMAX := (maximalVerkaufspreis - (einkaufsPreis.PREIS * kostenmarge))/einkaufsPreis.PREIS;
+                end if;
+            else
+                -- "Fehlertoleranz" sollte bei Standardkalkulation
+                gewinnmargeMax := standardGewinnmarge + 0.5;
+            end if;
+            -- Nur wenn kein maximaler Verkaufspreis gesetzt wurde gewinnmarge und verkaufspreis berechnen
+            if maxVKTrue = 0 Then
+                -- Verkaufspreis aus Gewinnmarge zufällig ermitteln und auf 0,10 Cent runden
+                gewinnmarge := DBMS_RANDOM.VALUE(standardGewinnmarge, gewinnmargeMax);
+                verkaufspreis := Round(einkaufsPreis.PREIS * (kostenmarge + gewinnmarge), 1);
+            end if;
+            -- Gewinnmarge zurückermitteln auf gerundeten Verkaufspreis oder maximalen Verkaufspreis
+            gewinnmarge := (verkaufspreis - (einkaufsPreis.PREIS * kostenmarge))/einkaufsPreis.PREIS;
+            insert into KALKULATION values (
+                                               einkaufsPreis.PREIS,
+                                               verkaufspreis,
+                                               gewinnmarge,
+                                               kostenmarge,
+                                               (
+                                                   SELECT einkaufsPreis.DATUM +
+                                                          DBMS_RANDOM.VALUE(0, TO_DATE('2019-09-30 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
+                                                                               einkaufsPreis.DATUM)
+                                                   FROM dual
+                                               ),
+                                               einkaufsPreis.NAME
+                                           );
+        end loop;
+    end loop;
 end;
 
 call createKalkulationen();
@@ -850,6 +913,7 @@ insert into BESTELLUNG values (46, 0.0, 1, 1, '2020-02-13', 10, 'Gratinierte Spa
 insert into BESTELLUNG values (47, 0.0, 0, 1, '2020-02-13', 2, 'Gratinierte Spargelpfannkuchen', 3, 1);
 insert into BESTELLUNG values (48, 0.0, 0, 1, '2020-02-13', 2, 'Gratinierte Spargelpfannkuchen', 4, 1);
 -- Nicht abgerechnet
+-- TODO: "Aufgegeben" soll aktuelle Systemzeit - 2h gewürfelt werden
 insert into BESTELLUNG values (49, 0.0, 0, 0, '2020-02-13', null, 'Zimtapfelküchle', 1, 1);
 insert into BESTELLUNG values (50, 0.0, 0, 0, '2020-02-13', null, 'Sprudel', 1, 1);
 insert into BESTELLUNG values (51, 0.0, 0, 0, '2020-02-13', null, 'Zwiebelrostbraten mit Spätzle', 2, 2);

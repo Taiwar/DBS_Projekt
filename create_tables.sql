@@ -61,7 +61,8 @@ create table Komponente(
                                                  'GARDEMANGER',
                                                  'POTAGER',
                                                  'POISSONNIER',
-                                                 'ENTREMETIER'
+                                                 'ENTREMETIER',
+                                                 'SERVICE'
                                    )
                                )
 );
@@ -196,26 +197,35 @@ alter session set nls_date_format = 'yyyy-mm-dd';
 alter session set nls_timestamp_format = 'YYYY-MM-DD HH24:MI:SS';
 
 -- Helfer-Views
+CREATE OR REPLACE VIEW AktuellsteEinkaufspreise AS
+SELECT *
+FROM EINKAUFSPREIS E1
+where datum > ALL (
+    select datum
+    from Einkaufspreis E2
+    where E1.FK_LEBENSMITTEL_NAME = E2.FK_LEBENSMITTEL_NAME and E1.DATUM != E2.DATUM
+);
 
 CREATE OR REPLACE VIEW AktuellerEinkaufspreisLM AS
 SELECT
     LM.FK_LEBENSMITTEL_NAME Name, LM.FK_KOMPONENTE_NAME KomponentenName,
-    E.PREIS * (LM.MENGE / E.GRUNDMENGE) Preis, LM.MENGE Menge, LM.EINHEIT Einheit
+    AE.PREIS * (LM.MENGE / AE.GRUNDMENGE) Preis, LM.MENGE Menge, LM.EINHEIT Einheit,
+    AE.datum Datum
 FROM LEBENSMITTELMENGE LM
          join LEBENSMITTEL L on L.NAME = LM.FK_LEBENSMITTEL_NAME
-         join EINKAUFSPREIS E on E.FK_LEBENSMITTEL_NAME = L.NAME
+         join AktuellsteEinkaufspreise AE on AE.FK_LEBENSMITTEL_NAME = L.NAME
 ;
 
 CREATE OR REPLACE VIEW AktuellerEinkaufspreisK AS
-SELECT K.NAME Name, sum(ALM.PREIS) Preis, K.GRUNDMENGE Menge
+SELECT K.NAME Name, sum(ALM.PREIS) Preis, K.GRUNDMENGE Menge, ALM.Datum Datum
 FROM KOMPONENTE K
          join AktuellerEinkaufspreisLM ALM on ALM.KomponentenName = K.NAME
-group by K.Name, K.GRUNDMENGE;
+group by K.Name, K.GRUNDMENGE, ALM.Datum;
 
 CREATE OR REPLACE VIEW AktuellerEinkaufspreisKM AS
 SELECT
     KM.FK_KOMPONENTE_NAME Name, KM.FK_GERICHT_NAME GerichtName,
-    AEK.Preis * (KM.MENGE / AEK.Menge) Preis, KM.MENGE Menge, KM.EINHEIT Einheit
+    AEK.Preis * (KM.MENGE / AEK.Menge) Preis, KM.MENGE Menge, KM.EINHEIT Einheit, AEK.Datum Datum
 FROM KOMPONENTENMENGE KM
          join KOMPONENTE K on K.NAME = KM.FK_KOMPONENTE_NAME
          join AktuellerEinkaufspreisK AEK on AEK.Name = K.NAME
@@ -223,7 +233,7 @@ FROM KOMPONENTENMENGE KM
 
 
 CREATE OR REPLACE VIEW AktuellerEinkaufspreisG AS
-SELECT G.NAME Name, ROUND(sum(AEM.PREIS), 2) Preis
+SELECT G.NAME Name, ROUND(sum(AEM.PREIS), 2) Preis, AEM.Datum Datum
 FROM GERICHT G
          join AktuellerEinkaufspreisKM AEM on AEM.GerichtName = G.NAME
-group by G.Name;
+group by G.Name, AEM.Datum;

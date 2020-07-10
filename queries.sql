@@ -1,9 +1,13 @@
 -- 1
 -- Speisekarte generieren: Wähle 5 saisonale Gerichte für jede Kategorie aus und sortiere die Gerichte zu jeder
 -- Kategorie nach Marge und Verkaufspreis.
-select G.NAME, K.VERKAUFSPREIS
+select G.KATEGORIE kategorie
+from GERICHT G
+group by G.KATEGORIE;
+
+select G.NAME, K.VERKAUFSPREIS, K.GEWINNMARGE
 from GERICHT G join KALKULATION K on G.NAME = K.FK_GERICHT_NAME
-where G.SAISON = 'Sommer' -- TODO: Saison nicht im Gericht -> Was ist "Saisonales Gericht"?
+where G.AKTIVIERT = 1 and G.STANDARD = 1
 order by K.GEWINNMARGE desc, K.VERKAUFSPREIS desc
     FETCH FIRST 5 ROWS Only;
 
@@ -37,7 +41,25 @@ order by verkauft desc;
 -- 4
 -- In welcher Kalenderwoche wurde der höchste Gewinn erzielt? Wieviel davon war Trinkgeld?
 -- (Trinkgeld = Bezahlbetrag - Summe Preis Bestellungen)
-select sum(A.ABRECHUNGSSUMME) "Gesamtbetrag", sum(A.ABRECHUNGSSUMME - sum(K.VERKAUFSPREIS)) "Davon Trinkgeld"
+select *
+from KALKULATION;
+
+select *
+from ABRECHNUNG A
+         join BESTELLUNG B on A.RECHNUNGSNR = B.FK_ABRECHNUNG_RECHNUNGSNR
+         join GERICHT G on G.NAME = B.FK_GERICHT_NAME
+         join KALKULATION K on K.FK_GERICHT_NAME = G.NAME
+where K.DATUM <= A.DATUM and A.DATUM - K.DATUM < ANY (
+    select A.DATUM - K2.DATUM
+    from KALKULATION K2
+    where K2.DATUM != K.DATUM and K2.FK_GERICHT_NAME != K.FK_GERICHT_NAME -- Nicht mit sich selbst vergleichen
+);
+
+
+select
+       TO_CHAR(A.DATUM, 'Q') AS "Quartal",
+       sum(A.ABRECHUNGSSUMME) "Gesamtbetrag",
+       sum(A.ABRECHUNGSSUMME - sum(K.VERKAUFSPREIS)) "Davon Trinkgeld"
 from ABRECHNUNG A
          join BESTELLUNG B on A.RECHNUNGSNR = B.FK_ABRECHNUNG_RECHNUNGSNR
          join GERICHT G on G.NAME = B.FK_GERICHT_NAME
@@ -46,7 +68,8 @@ where K.DATUM >= A.DATUM and K.DATUM - A.DATUM < ANY (
     select K2.DATUM - A.DATUM
     from KALKULATION K2
     where K2.DATUM != K.DATUM and K2.FK_GERICHT_NAME != K.FK_GERICHT_NAME -- Nicht mit sich selbst vergleichen
-); -- Kalkulation, die älter als Abrechnungsdatum und am nächsten dran ist
+)
+group by TO_CHAR(A.DATUM, 'Q'); -- Kalkulation, die älter als Abrechnungsdatum und am nächsten dran ist
 
 
 -- 5
