@@ -191,3 +191,39 @@ create table Bestellung(
                            fk_person_tisch int not null,
                            foreign key (fk_person_platz, fk_person_tisch) references Person(platz, fk_tisch_nummer)
 );
+
+alter session set nls_date_format = 'yyyy-mm-dd';
+alter session set nls_timestamp_format = 'YYYY-MM-DD HH24:MI:SS';
+
+-- Helfer-Views
+
+CREATE OR REPLACE VIEW AktuellerEinkaufspreisLM AS
+SELECT
+    LM.FK_LEBENSMITTEL_NAME Name, LM.FK_KOMPONENTE_NAME KomponentenName,
+    E.PREIS * (LM.MENGE / E.GRUNDMENGE) Preis, LM.MENGE Menge, LM.EINHEIT Einheit
+FROM LEBENSMITTELMENGE LM
+         join LEBENSMITTEL L on L.NAME = LM.FK_LEBENSMITTEL_NAME
+         join EINKAUFSPREIS E on E.FK_LEBENSMITTEL_NAME = L.NAME
+;
+
+CREATE OR REPLACE VIEW AktuellerEinkaufspreisK AS
+SELECT K.NAME Name, sum(ALM.PREIS) Preis, K.GRUNDMENGE Menge
+FROM KOMPONENTE K
+         join AktuellerEinkaufspreisLM ALM on ALM.KomponentenName = K.NAME
+group by K.Name, K.GRUNDMENGE;
+
+CREATE OR REPLACE VIEW AktuellerEinkaufspreisKM AS
+SELECT
+    KM.FK_KOMPONENTE_NAME Name, KM.FK_GERICHT_NAME GerichtName,
+    AEK.Preis * (KM.MENGE / AEK.Menge) Preis, KM.MENGE Menge, KM.EINHEIT Einheit
+FROM KOMPONENTENMENGE KM
+         join KOMPONENTE K on K.NAME = KM.FK_KOMPONENTE_NAME
+         join AktuellerEinkaufspreisK AEK on AEK.Name = K.NAME
+;
+
+
+CREATE OR REPLACE VIEW AktuellerEinkaufspreisG AS
+SELECT G.NAME Name, ROUND(sum(AEM.PREIS), 2) Preis
+FROM GERICHT G
+         join AktuellerEinkaufspreisKM AEM on AEM.GerichtName = G.NAME
+group by G.Name;
