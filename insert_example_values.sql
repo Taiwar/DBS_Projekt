@@ -15,27 +15,35 @@ select *
 from AktuellerEinkaufspreisLM;
 
 CREATE OR REPLACE VIEW AktuellerEinkaufspreisK AS
-SELECT K.NAME, sum(ALM.PREIS) "Preis"
+SELECT K.NAME Name, sum(ALM.PREIS) Preis, K.GRUNDMENGE Menge
 FROM KOMPONENTE K
          join AktuellerEinkaufspreisLM ALM on ALM.KomponentenName = K.NAME
-group by K.Name;
+group by K.Name, K.GRUNDMENGE;
 
 select *
 from AktuellerEinkaufspreisK;
 
-
-CREATE OR REPLACE VIEW AktuelleEinkaufspreisSumme AS
-SELECT G.NAME, sum(E.PREIS) "Preis"
-FROM GERICHT G
-         join KOMPONENTENMENGE KM on G.Name = KM.FK_GERICHT_NAME
+CREATE OR REPLACE VIEW AktuellerEinkaufspreisKM AS
+SELECT
+    KM.FK_KOMPONENTE_NAME Name, KM.FK_GERICHT_NAME GerichtName,
+    AEK.Preis * (KM.MENGE / AEK.Menge) Preis, KM.MENGE Menge, KM.EINHEIT Einheit
+FROM KOMPONENTENMENGE KM
          join KOMPONENTE K on K.NAME = KM.FK_KOMPONENTE_NAME
-         join LEBENSMITTELMENGE LM on LM.FK_KOMPONENTE_NAME = K.NAME
-         join LEBENSMITTEL L on L.NAME = LM.FK_LEBENSMITTEL_NAME
-         join EINKAUFSPREIS E on E.FK_LEBENSMITTEL_NAME = L.NAME
+         join AktuellerEinkaufspreisK AEK on AEK.Name = K.NAME
+;
+
+select *
+from AktuellerEinkaufspreisKM;
+
+
+CREATE OR REPLACE VIEW AktuellerEinkaufspreisG AS
+SELECT G.NAME Name, ROUND(sum(AEM.PREIS), 2) Preis
+FROM GERICHT G
+         join AktuellerEinkaufspreisKM AEM on AEM.GerichtName = G.NAME
 group by G.Name;
 
 select *
-from AktuelleEinkaufspreisSumme;
+from AktuellerEinkaufspreisG;
 
 /**
   >===========================================================================================================<
@@ -154,7 +162,7 @@ insert into EINKAUFSPREIS values (1.39, 'GRAMM', 200, '2020-02-13', 'Knoblauch')
 insert into EINKAUFSPREIS values (9.00, 'GRAMM', 5000, '2020-02-13', 'Kartoffeln');
 insert into EINKAUFSPREIS values (0.35, 'ML', 1000, '2020-02-13', 'Milch');
 insert into EINKAUFSPREIS values (0.65, 'ML', 200, '2020-02-13', 'Sahne');
-insert into EINKAUFSPREIS values (31.79, 'GRAMM', 1000, '2020-02-13', 'Entrecote');
+insert into EINKAUFSPREIS values (51.79, 'GRAMM', 1000, '2020-02-13', 'Entrecote');
 insert into EINKAUFSPREIS values (7.12, 'GRAMM', 1000, '2020-02-13', 'Hackfleisch Rind');
 insert into EINKAUFSPREIS values (20.49, 'GRAMM', 2000, '2020-02-13', 'Hackfleisch Schwein');
 insert into EINKAUFSPREIS values (0.85, 'GRAMM', 1000, '2020-02-13', 'Semmelbrösel');
