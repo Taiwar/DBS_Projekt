@@ -186,7 +186,7 @@ create table Bestellung(
                            reklamiert number(1) default 0 not null,
                            fertig number(1) default 0 not null,
                            aufgegeben timestamp not null,
-                           fk_abrechnung_rechnungsnr int references Abrechnung(rechnungsnr) not null,
+                           fk_abrechnung_rechnungsnr int references Abrechnung(rechnungsnr),
                            fk_gericht_name varchar2(100) references Gericht(name) not null,
                            fk_person_platz int not null,
                            fk_person_tisch int not null,
