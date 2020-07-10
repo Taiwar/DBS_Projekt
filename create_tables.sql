@@ -1,9 +1,8 @@
-/*
+
 -- Ent-Kommentieren beim Wiederneuaufsetzen
+/*
 drop table Lebensmittel cascade constraints purge;
 drop table Einkaufspreis cascade constraints purge;
-drop table Allergen cascade constraints purge;
-drop table AllergenLebensmittel cascade constraints purge;
 drop table LebensmittelMenge cascade constraints purge;
 drop table Komponente cascade constraints purge;
 drop table KomponentenMenge cascade constraints purge;
