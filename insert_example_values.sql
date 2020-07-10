@@ -1,6 +1,42 @@
 alter session set nls_date_format = 'yyyy-mm-dd';
 alter session set nls_timestamp_format = 'YYYY-MM-DD HH24:MI:SS';
 
+
+CREATE OR REPLACE VIEW AktuellerEinkaufspreisLM AS
+SELECT
+    LM.FK_LEBENSMITTEL_NAME Name, LM.FK_KOMPONENTE_NAME KomponentenName,
+    E.PREIS * (LM.MENGE / E.GRUNDMENGE) Preis, LM.MENGE Menge, LM.EINHEIT Einheit
+FROM LEBENSMITTELMENGE LM
+         join LEBENSMITTEL L on L.NAME = LM.FK_LEBENSMITTEL_NAME
+         join EINKAUFSPREIS E on E.FK_LEBENSMITTEL_NAME = L.NAME
+;
+
+select *
+from AktuellerEinkaufspreisLM;
+
+CREATE OR REPLACE VIEW AktuellerEinkaufspreisK AS
+SELECT K.NAME, sum(ALM.PREIS) "Preis"
+FROM KOMPONENTE K
+         join AktuellerEinkaufspreisLM ALM on ALM.KomponentenName = K.NAME
+group by K.Name;
+
+select *
+from AktuellerEinkaufspreisK;
+
+
+CREATE OR REPLACE VIEW AktuelleEinkaufspreisSumme AS
+SELECT G.NAME, sum(E.PREIS) "Preis"
+FROM GERICHT G
+         join KOMPONENTENMENGE KM on G.Name = KM.FK_GERICHT_NAME
+         join KOMPONENTE K on K.NAME = KM.FK_KOMPONENTE_NAME
+         join LEBENSMITTELMENGE LM on LM.FK_KOMPONENTE_NAME = K.NAME
+         join LEBENSMITTEL L on L.NAME = LM.FK_LEBENSMITTEL_NAME
+         join EINKAUFSPREIS E on E.FK_LEBENSMITTEL_NAME = L.NAME
+group by G.Name;
+
+select *
+from AktuelleEinkaufspreisSumme;
+
 /**
   >===========================================================================================================<
   >================================================Felix======================================================<
@@ -123,7 +159,7 @@ insert into EINKAUFSPREIS values (7.12, 'GRAMM', 1000, '2020-02-13', 'Hackfleisc
 insert into EINKAUFSPREIS values (20.49, 'GRAMM', 2000, '2020-02-13', 'Hackfleisch Schwein');
 insert into EINKAUFSPREIS values (0.85, 'GRAMM', 1000, '2020-02-13', 'Semmelbrösel');
 insert into EINKAUFSPREIS values (52.50, 'STK', 24, '2020-02-13', 'Austern');
-insert into EINKAUFSPREIS values (2.80, 'STK', 5, '2020-02-13', 'Zitronengras');
+insert into EINKAUFSPREIS values (2.80, 'GRAMM', 200, '2020-02-13', 'Zitronengras');
 insert into EINKAUFSPREIS values (2.88, 'GRAMM', 100, '2020-02-13', 'Galgant');
 insert into EINKAUFSPREIS values (4.95, 'GRAMM', 1000, '2020-02-13', 'Zitronen');
 insert into EINKAUFSPREIS values (7.95, 'GRAMM', 1000, '2020-02-13', 'Zimt gemahlen');
@@ -186,7 +222,7 @@ insert into EINKAUFSPREIS values (0.70, 'ML', 1000, '2020-02-13', 'Sprudel');
 insert into EINKAUFSPREIS values (5.30, 'ML', 1000, '2020-02-13', 'Kokosnussmilch');
 insert into EINKAUFSPREIS values (15.20, 'ML', 1000, '2020-02-13', 'Fischsauce');
 insert into EINKAUFSPREIS values (0.45, 'GRAMM', 100, '2020-02-13', 'Himbeeren TK');
-insert into EINKAUFSPREIS values (0.30, 'STK', 1, '2020-02-13', 'Baguette');
+insert into EINKAUFSPREIS values (0.30, 'GRAMM', 200, '2020-02-13', 'Baguette');
 
 
 -- Komponente
@@ -263,7 +299,7 @@ insert into LEBENSMITTELMENGE values ('Schweinesteak', 'Schnitzel', 400, 'GRAMM'
 insert into LEBENSMITTELMENGE values ('Frittierfett', 'Pommes', 200, 'GRAMM');
 
 -- Blattsalat
-insert into LEBENSMITTELMENGE values ('Kopfsalat', 'Blattsalat', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Kopfsalat', 'Blattsalat', 0.5, 'STK');
 insert into LEBENSMITTELMENGE values ('Senf (mittelscharf)', 'Blattsalat', 8, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Zucker', 'Blattsalat', 15, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Wasser', 'Blattsalat', 50, 'ML');
@@ -271,7 +307,7 @@ insert into LEBENSMITTELMENGE values ('Essig', 'Blattsalat', 60, 'ML');
 insert into LEBENSMITTELMENGE values ('Salz', 'Blattsalat', 6, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Olivenöl', 'Blattsalat', 80, 'ML');
 -- Krautsalat
-insert into LEBENSMITTELMENGE values ('Weißkohl', 'Krautsalat', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Weißkohl', 'Krautsalat', 0.5, 'STK');
 insert into LEBENSMITTELMENGE values ('Senf (mittelscharf)', 'Krautsalat', 8, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Zucker', 'Krautsalat', 15, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Wasser', 'Krautsalat', 50, 'ML');
@@ -342,9 +378,9 @@ insert into LEBENSMITTELMENGE values ('Spargel', 'Spargel püriert', 1000, 'GRAM
 -- Spargel gekocht
 insert into LEBENSMITTELMENGE values ('Spargel', 'Spargel gekocht', 200, 'GRAMM');
 -- Kürbis püriert
-insert into LEBENSMITTELMENGE values ('Kürbis', 'Kürbis püriert', 1000, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Kürbis', 'Kürbis püriert', 1, 'STK');
 -- Kürbis gestückelt
-insert into LEBENSMITTELMENGE values ('Kürbis', 'Kürbis gestückelt', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Kürbis', 'Kürbis gestückelt', 0.5, 'STK');
 -- Zwiebeln gewürfelt
 insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Zwiebeln gewürfelt', 200, 'GRAMM');
 -- Knoblauch gewürfelt
@@ -361,7 +397,7 @@ insert into LEBENSMITTELMENGE values ('Karotten', 'Fleischbrühe mit Kartoffeln'
 insert into LEBENSMITTELMENGE values ('Kartoffeln', 'Fleischbrühe mit Kartoffeln', 300, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Pfeffer', 'Fleischbrühe mit Kartoffeln', 10, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Fleischbrühe mit Kartoffeln', 100, 'GRAMM');
-insert into LEBENSMITTELMENGE values ('Knollensellerie', 'Fleischbrühe mit Kartoffeln', 150, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knollensellerie', 'Fleischbrühe mit Kartoffeln', 2, 'STK');
 insert into LEBENSMITTELMENGE values ('Fleischknochen', 'Fleischbrühe mit Kartoffeln', 200, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Markknochen', 'Fleischbrühe mit Kartoffeln', 250, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Lauch', 'Fleischbrühe mit Kartoffeln', 50, 'GRAMM');
@@ -373,14 +409,14 @@ insert into LEBENSMITTELMENGE values ('Karotten', 'Fleischbrühe', 200, 'GRAMM')
 insert into LEBENSMITTELMENGE values ('Kartoffeln', 'Fleischbrühe', 300, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Pfeffer', 'Fleischbrühe', 10, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Fleischbrühe', 100, 'GRAMM');
-insert into LEBENSMITTELMENGE values ('Knollensellerie', 'Fleischbrühe', 150, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Knollensellerie', 'Fleischbrühe', 2, 'STK');
 insert into LEBENSMITTELMENGE values ('Fleischknochen', 'Fleischbrühe', 200, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Markknochen', 'Fleischbrühe', 250, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Lauch', 'Fleischbrühe', 50, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Zucker', 'Fleischbrühe', 20, 'GRAMM');
 -- Tomaten-Mozarella
 insert into LEBENSMITTELMENGE values ('Tomaten', 'Tomaten-Mozarella', 100, 'GRAMM');
-insert into LEBENSMITTELMENGE values ('Büffelmozarella', 'Tomaten-Mozarella', 100, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Büffelmozarella', 'Tomaten-Mozarella', 2, 'STK');
 insert into LEBENSMITTELMENGE values ('Balsamico', 'Tomaten-Mozarella', 20, 'ML');
 -- geöffnete Austern
 insert into LEBENSMITTELMENGE values ('Austern', 'geöffnete Austern', 6, 'STK');
@@ -545,7 +581,7 @@ insert into LEBENSMITTELMENGE values ('Rotwein', '1/4 Rotwein', 250, 'ML');
 insert into LEBENSMITTELMENGE values ('Bier', 'Glas Bier', 500, 'ML');
 -- Apfelrotkraut
 insert into LEBENSMITTELMENGE values ('Äpfel', 'Apfelrotkraut', 200, 'GRAMM');
-insert into LEBENSMITTELMENGE values ('Rotkohl', 'Apfelrotkraut', 200, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Rotkohl', 'Apfelrotkraut', 0.5, 'STK');
 insert into LEBENSMITTELMENGE values ('Salz', 'Apfelrotkraut', 20, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Pfeffer', 'Apfelrotkraut', 10, 'GRAMM');
 -- Semmelknödel
@@ -708,6 +744,12 @@ insert into KOMPONENTENMENGE values ('Zitronenscheibe', 'Sprudel', 1, 'STK');
 
 -- Kalkulation
 insert into KALKULATION values (30.0, 90.0, 1.5, 2, '2019-02-1', 'Schnitzel mit Pommes');
+create or replace procedure createKalkulationen
+    is
+begin
+end;
+
+call createKalkulationen();
 
 -- Saison
 insert into SAISON values ('Sommer', 16, 40);
@@ -874,7 +916,7 @@ begin
             set DATUM = (
                 SELECT TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
                        DBMS_RANDOM.VALUE(0, TO_DATE('2019-09-30 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
-                       TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                                            TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
                 FROM dual
             )
             where ein.PREIS = e.PREIS and ein.FK_LEBENSMITTEL_NAME = e.FK_LEBENSMITTEL_NAME;
@@ -893,7 +935,7 @@ begin
             set DATUM = (
                 SELECT TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
                        DBMS_RANDOM.VALUE(0, TO_DATE('2019-09-30 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
-                       TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                                            TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
                 FROM dual
             )
             where kal.GEWINNMARGE = k.GEWINNMARGE and kal.KOSTENMARGE = k.KOSTENMARGE and kal.FK_GERICHT_NAME = k.FK_GERICHT_NAME;
@@ -912,7 +954,7 @@ begin
             set ZULETZTBETREUT = (
                 SELECT TO_DATE('2020-07-10 20:00:00', 'YYYY-MM-DD HH24:MI:SS') +
                        DBMS_RANDOM.VALUE(0, TO_DATE('2020-07-10 22:00:00', 'YYYY-MM-DD HH24:MI:SS') -
-                       TO_DATE('2020-07-10 20:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                                            TO_DATE('2020-07-10 20:00:00', 'YYYY-MM-DD HH24:MI:SS'))
                 FROM dual
             )
             where tis.NUMMER = t.NUMMER;
@@ -953,7 +995,7 @@ begin
             set AUFGEGEBEN = (
                 SELECT TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
                        DBMS_RANDOM.VALUE(0, TO_DATE('2020-07-10 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
-                       TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                                            TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
                 FROM dual
             )
             where bes.BESTELLNR = b.BESTELLNR;
