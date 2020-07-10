@@ -29,18 +29,17 @@ order by B.AUFGEGEBEN, G.ZUBEREITUNGSDAUER;
 
 -- 3
 -- Welches Gericht aus der Kategorie „x“ hat sich in Bezug auf die aktivierten Tage am besten verkauft?
-select distinct B.FK_GERICHT_NAME "Gericht", (
+select distinct B.FK_GERICHT_NAME "Gericht", Round((
     select count(*)
     from BESTELLUNG
     where FK_GERICHT_NAME = G.NAME
-) / G.AKTIVIERTETAGE as verkauft
+) / G.AKTIVIERTETAGE, 3) as KaeufeProTag
 from BESTELLUNG B join GERICHT G on B.FK_GERICHT_NAME = G.NAME
 where KATEGORIE = 'GETRAENK'
-order by verkauft desc;
+order by KaeufeProTag desc;
 
 -- 4
--- In welcher Kalenderwoche wurde der höchste Gewinn erzielt? Wieviel davon war Trinkgeld?
--- (Trinkgeld = Bezahlbetrag - Summe Preis Bestellungen)
+-- In welcher Kalenderwoche wurde der höchste Gewinn erzielt?
 select *
 from KALKULATION;
 
@@ -57,7 +56,7 @@ where K.DATUM <= A.DATUM and A.DATUM - K.DATUM < ANY (
 
 
 select
-       TO_CHAR(A.DATUM, 'Q') AS "Quartal",
+       TO_CHAR(A.DATUM, 'WW') AS "Quartal",
        sum(A.ABRECHUNGSSUMME) "Gesamtbetrag",
        sum(A.ABRECHUNGSSUMME - sum(K.VERKAUFSPREIS)) "Davon Trinkgeld"
 from ABRECHNUNG A
@@ -69,7 +68,7 @@ where K.DATUM >= A.DATUM and K.DATUM - A.DATUM < ANY (
     from KALKULATION K2
     where K2.DATUM != K.DATUM and K2.FK_GERICHT_NAME != K.FK_GERICHT_NAME -- Nicht mit sich selbst vergleichen
 )
-group by TO_CHAR(A.DATUM, 'Q'); -- Kalkulation, die älter als Abrechnungsdatum und am nächsten dran ist
+group by TO_CHAR(A.DATUM, 'WW'); -- Kalkulation, die älter als Abrechnungsdatum und am nächsten dran ist
 
 
 -- 5

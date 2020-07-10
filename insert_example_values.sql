@@ -780,6 +780,7 @@ insert into SAISON values ('Sommer', 16, 40);
 
 -- Speisekarte
 
+
 -- GerichtSpeisekarte
 
 
@@ -914,6 +915,7 @@ insert into BESTELLUNG values (47, 0.0, 0, 1, '2020-02-13', 2, 'Gratinierte Spar
 insert into BESTELLUNG values (48, 0.0, 0, 1, '2020-02-13', 2, 'Gratinierte Spargelpfannkuchen', 4, 1);
 -- Nicht abgerechnet
 -- TODO: "Aufgegeben" soll aktuelle Systemzeit - 2h gewürfelt werden
+-- TODO: Bzw. Bestellungen mit Funktion generieren
 insert into BESTELLUNG values (49, 0.0, 0, 0, '2020-02-13', null, 'Zimtapfelküchle', 1, 1);
 insert into BESTELLUNG values (50, 0.0, 0, 0, '2020-02-13', null, 'Sprudel', 1, 1);
 insert into BESTELLUNG values (51, 0.0, 0, 0, '2020-02-13', null, 'Zwiebelrostbraten mit Spätzle', 2, 2);
