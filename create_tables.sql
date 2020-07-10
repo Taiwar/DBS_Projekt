@@ -59,7 +59,7 @@ create table Komponente(
                                                  'SAUCIER',
                                                  'PATISSIER',
                                                  'ROTISSEUR',
-                                                 'GARDEMANAGER',
+                                                 'GARDEMANGER',
                                                  'POTAGER',
                                                  'POISSONNIER'
                                    )
