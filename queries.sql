@@ -2,15 +2,15 @@
 -- Speisekarte generieren: Wähle 5 saisonale Gerichte für jede Kategorie aus und sortiere die Gerichte zu jeder
 -- Kategorie nach Marge und Verkaufspreis.
 
-WITH karte AS (
-    SELECT g.name,
+with karte as (
+    select g.name,
            g.KATEGORIE,
            ak.GEWINNMARGE,
            ak.VERKAUFSPREIS,
-           ROW_NUMBER() OVER (PARTITION BY g.KATEGORIE ORDER BY g.KATEGORIE) AS rn
-    FROM GERICHT g join AktuellsteKalkulationen ak on g.name = ak.FK_GERICHT_NAME)
-SELECT k.NAME, k.KATEGORIE, ROUND(k.GEWINNMARGE, 2), k.VERKAUFSPREIS
-FROM karte k
+           ROW_NUMBER() over (partition by g.KATEGORIE order by g.KATEGORIE) as rn
+    from GERICHT g join AktuellsteKalkulationen ak on g.name = ak.FK_GERICHT_NAME)
+select k.NAME, k.KATEGORIE, ROUND(k.GEWINNMARGE, 2) Gewinnmarge, k.VERKAUFSPREIS
+from karte k
 where rn <= 5
 order by k.GEWINNMARGE desc, k.VERKAUFSPREIS desc;
 
@@ -24,10 +24,10 @@ from KOMPONENTENMENGE KM
          join BESTELLUNG B on B.FK_GERICHT_NAME = G.NAME
 where
         B.FERTIG = 0 and
-        K.KATEGORIE = 'GARDEMANGER'
-  -- Filter auf Tisch und Person
-  -- and B.FK_PERSON_TISCH = 0 and
-  -- B.FK_PERSON_PLATZ = 0
+        K.KATEGORIE = 'GARDEMANGER' and
+        -- Filter auf Tisch und Person
+        B.FK_PERSON_TISCH = 1 and
+        B.FK_PERSON_PLATZ = 1
 order by B.AUFGEGEBEN, G.ZUBEREITUNGSDAUER;
 
 -- 3
@@ -43,43 +43,54 @@ order by KaeufeProTag desc;
 
 -- 4
 -- In welcher Kalenderwoche wurde der höchste Gewinn erzielt?
-select A.BEZAHLBETRAG,
-       TO_CHAR(A.DATUM, 'WW') as KW,
-       (select sum(AEG.PREIS) from AKTUELLEREINKAUFSPREISG AEG where AEG.NAME = G.NAME) Einkaufskosten,
-       (A.BEZAHLBETRAG - (select sum(AEG.PREIS) from AKTUELLEREINKAUFSPREISG AEG where AEG.NAME = G.NAME)) Gewinn
-from ABRECHNUNG A
-         join BESTELLUNG B on A.RECHNUNGSNR = B.FK_ABRECHNUNG_RECHNUNGSNR
-         join GERICHT G on G.NAME = B.FK_GERICHT_NAME
-         join KALKULATION K on K.FK_GERICHT_NAME = G.NAME
-         join AKTUELLEREINKAUFSPREISG AEG on AEG.NAME = G.NAME
-where K.DATUM <= A.DATUM and A.DATUM - K.DATUM < ANY (
-    select A.DATUM - K2.DATUM
-    from KALKULATION K2
-    where K2.DATUM != K.DATUM and K2.FK_GERICHT_NAME != K.FK_GERICHT_NAME -- Nicht mit sich selbst vergleichen
+
+-- Nur maximum
+with SummierteAbrechnungen as (
+    select A.BEZAHLBETRAG,
+           TO_CHAR(A.DATUM, 'WW') as KW,
+           sum(AEG.PREIS) Einkaufspreis,
+           (A.BEZAHLBETRAG - sum(AEG.PREIS)) Gewinn
+    from ABRECHNUNG A
+             join BESTELLUNG B on A.RECHNUNGSNR = B.FK_ABRECHNUNG_RECHNUNGSNR
+             join GERICHT G on G.NAME = B.FK_GERICHT_NAME
+             join KALKULATION K on K.FK_GERICHT_NAME = G.NAME
+             join AKTUELLEREINKAUFSPREISG AEG on AEG.NAME = G.NAME
+    where K.DATUM <= A.DATUM and A.DATUM - K.DATUM < ANY (
+        select A.DATUM - K2.DATUM
+        from KALKULATION K2
+        where K2.DATUM != K.DATUM and K2.FK_GERICHT_NAME != K.FK_GERICHT_NAME -- Nicht mit sich selbst vergleichen
+    )
+    group by A.BEZAHLBETRAG, A.DATUM
+)
+select sum(SummierteAbrechnungen.GEWINN) Gewinnsumme, SummierteAbrechnungen.KW
+from SummierteAbrechnungen
+group by SummierteAbrechnungen.KW
+having sum(SummierteAbrechnungen.Gewinn) = (
+    select max(SummierteAbrechnungen.Gewinn)
+    from SummierteAbrechnungen
 );
 
-select A.RECHNUNGSNR, G.Name
-from ABRECHNUNG A
-         join BESTELLUNG B on A.RECHNUNGSNR = B.FK_ABRECHNUNG_RECHNUNGSNR
-         join GERICHT G on G.NAME = B.FK_GERICHT_NAME
-         join KALKULATION K on K.FK_GERICHT_NAME = G.NAME;
-
-
-select
-    TO_CHAR(A.DATUM, 'WW') AS "KW",
-    sum(A.ABRECHUNGSSUMME) "Gesamtbetrag",
-    sum(A.ABRECHUNGSSUMME - sum(K.VERKAUFSPREIS)) "Davon Trinkgeld"
-from ABRECHNUNG A
-         join BESTELLUNG B on A.RECHNUNGSNR = B.FK_ABRECHNUNG_RECHNUNGSNR
-         join GERICHT G on G.NAME = B.FK_GERICHT_NAME
-         join KALKULATION K on K.FK_GERICHT_NAME = G.NAME
-where K.DATUM >= A.DATUM and K.DATUM - A.DATUM < ANY (
-    select K2.DATUM - A.DATUM
-    from KALKULATION K2
-    where K2.DATUM != K.DATUM and K2.FK_GERICHT_NAME != K.FK_GERICHT_NAME -- Nicht mit sich selbst vergleichen
-)
-group by TO_CHAR(A.DATUM, 'WW'); -- Kalkulation, die älter als Abrechnungsdatum und am nächsten dran ist
-
+-- Als Rangliste
+select sum(Abrechnungen.GEWINN), Abrechnungen.KW
+from (
+    select A.BEZAHLBETRAG,
+           TO_CHAR(A.DATUM, 'WW') as KW,
+           sum(AEG.PREIS) Einkaufspreis,
+           (A.BEZAHLBETRAG - sum(AEG.PREIS)) Gewinn
+    from ABRECHNUNG A
+             join BESTELLUNG B on A.RECHNUNGSNR = B.FK_ABRECHNUNG_RECHNUNGSNR
+             join GERICHT G on G.NAME = B.FK_GERICHT_NAME
+             join KALKULATION K on K.FK_GERICHT_NAME = G.NAME
+             join AKTUELLEREINKAUFSPREISG AEG on AEG.NAME = G.NAME
+    where K.DATUM <= A.DATUM and A.DATUM - K.DATUM < ANY (
+        select A.DATUM - K2.DATUM
+        from KALKULATION K2
+        where K2.DATUM != K.DATUM and K2.FK_GERICHT_NAME != K.FK_GERICHT_NAME -- Nicht mit sich selbst vergleichen
+    )
+    group by A.BEZAHLBETRAG, A.DATUM
+) Abrechnungen
+group by Abrechnungen.KW
+order by sum(Abrechnungen.Gewinn) desc;
 
 -- 5
 -- Sortiere Gerichte nach bestem Verhältnis von Marge zu Bestellungen in einem bestimmten Zeitraum.
@@ -101,7 +112,7 @@ from GERICHT G
 
 -- 8
 -- Wie viel Trinkgeld wird im Schnitt gegeben? (Für alle Bestellungen: Trinkgeld = Bezahlbetrag - Summe Preis Bestellungen)
-Select ROUND(avg(BEZAHLBETRAG - ABRECHUNGSSUMME),2) "Durchschnittliches Trinkgeld" 
+Select ROUND(avg(BEZAHLBETRAG - ABRECHUNGSSUMME),2) "Durchschnittliches Trinkgeld"
 from ABRECHNUNG
 
 -- 9
