@@ -135,14 +135,52 @@ order by Einheit desc, Benutzt desc;
 -- 7
 -- Was ist die durchschnittliche Aufenthaltsdauer eines Gastes im Restaurant und wieviel Geld gibt er dabei aus?
 -- (Aufenthaltsdauer: Abrechnungsdatum – Datum der ersten Bestellung einer Person)
+with Verweilzeit As (
+    select min(B.BESTELLNR) minBestellNr, 
+            B.FK_ABRECHNUNG_RECHNUNGSNR, 
+            (cast(A.DATUM as Date) - cast(B1.AUFGEGEBEN as Date)) as Zeit
+    from BESTELLUNG B
+        join BESTELLUNG B1 on B1.BESTELLNR = B.BESTELLNR
+        join ABRECHNUNG A on B.FK_ABRECHNUNG_RECHNUNGSNR = A.RECHNUNGSNR
+    group by B.FK_ABRECHNUNG_RECHNUNGSNR, (cast(A.DATUM as Date) - cast(B1.AUFGEGEBEN as Date))
+    having B.FK_ABRECHNUNG_RECHNUNGSNR > 0)
+select ROUND(avg(V.ZEIT)*24*60,1) "durch Verweilzeit in Minuten"
+from VERWEILZEIT V;
 
 -- 8
 -- Wie viel Trinkgeld wird im Schnitt gegeben? (Für alle Bestellungen: Trinkgeld = Bezahlbetrag - Summe Preis Bestellungen)
 Select ROUND(avg(BEZAHLBETRAG - ABRECHUNGSSUMME),2) "Durchschnittliches Trinkgeld"
-from ABRECHNUNG
+from ABRECHNUNG;
 
 -- 9
 -- Welche Gerichte aus Kategorie „x“ wird in welcher Saison am meisten bestellt?
+-- alle Bestellungen werden verwendet da, Beispieldaten nicht ausreichend
+select distinct G.NAME, 
+    GS.FK_SPEISEKARTE_NAME as "Speisekarte", 
+    G.KATEGORIE as "Katergorie",
+    (select count(*) 
+    from BESTELLUNG best
+    where best.FK_GERICHT_NAME = G.NAME
+    group by G.NAME) as "Summe Bestellungen" 
+from GERICHTSPEISEKARTE GS
+    join GERICHT G on G.NAME = GS.FK_GERICHT_NAME 
+    join BESTELLUNG B on B.FK_GERICHT_NAME = G.NAME
+order by GS.FK_SPEISEKARTE_NAME, "Summe Bestellungen" desc;
 
 -- 10
 -- Zeige alternative Komponenten zu einem Gericht „x“, welches Allergen „y“ nicht enthält
+-- Beispiel Zwiebelrostbraten
+with KomponeteMitAllergen as (
+    select G.NAME Gericht, K.NAME KmitAllergen, AIK.LEBENSMITTEL LM, AIK.KATEGORIE 
+    from KOMPONENTE K 
+        join KOMPONENTENMENGE KM on KM.FK_KOMPONENTE_NAME = K.NAME
+        join GERICHT G on G.NAME = KM.FK_GERICHT_NAME
+        join ALLERGENEINKOMPONENTE AIK on AIK.KOMPONENTE = KM.FK_KOMPONENTE_NAME
+    where G.NAME = 'Zwiebelrostbraten mit Spätzle')
+select KMA.GERICHT "gewaehltes Gericht", 
+    KMA.KMITALLERGEN "Komponente mit Allergen", 
+    KMA.LM "betroffenes Lebensmittel",
+    K.NAME as "Alternative ohne Allergen"
+from KomponeteMitAllergen KMA
+    join KOMPONENTE K on K.KATEGORIE = KMA.KATEGORIE
+where KMA.KMITALLERGEN != K.NAME;
