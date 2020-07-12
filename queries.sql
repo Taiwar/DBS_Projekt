@@ -94,6 +94,8 @@ from GERICHT G
 
 -- 8
 -- Wie viel Trinkgeld wird im Schnitt gegeben? (Für alle Bestellungen: Trinkgeld = Bezahlbetrag - Summe Preis Bestellungen)
+Select ROUND(avg(BEZAHLBETRAG - ABRECHUNGSSUMME),2) "Durchschnittliches Trinkgeld" 
+from ABRECHNUNG
 
 -- 9
 -- Welche Gerichte aus Kategorie „x“ wird in welcher Saison am meisten bestellt?
