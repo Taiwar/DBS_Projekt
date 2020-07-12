@@ -36,10 +36,10 @@ select distinct B.FK_GERICHT_NAME "Gericht", Round((
                                                        select count(*)
                                                        from BESTELLUNG
                                                        where FK_GERICHT_NAME = G.NAME
-                                                   ) / G.AKTIVIERTETAGE, 3) as KaeufeProTag
+                                                   ) / G.AKTIVIERTETAGE, 3) as "Kaeufe Pro Tag"
 from BESTELLUNG B join GERICHT G on B.FK_GERICHT_NAME = G.NAME
 where KATEGORIE = 'GETRAENK'
-order by KaeufeProTag desc;
+order by "Kaeufe Pro Tag" desc;
 
 -- 4
 -- In welcher Kalenderwoche wurde der höchste Gewinn erzielt?
@@ -94,14 +94,16 @@ order by sum(Abrechnungen.Gewinn) desc;
 
 -- 5
 -- Sortiere Gerichte nach bestem Verhältnis von Marge zu Bestellungen in einem bestimmten Zeitraum.
-select distinct G.NAME "Gerichtsname", Round(K.GEWINNMARGE, 2) "Gewinnmarge", (
+select distinct G.NAME "Gerichtsname", Round((
     select count(*)
     from BESTELLUNG B2
     where B2.FK_GERICHT_NAME = G.NAME
-) "Bestellungen"
+) / AK.GEWINNMARGE, 2) "Bestellungen zu Gewinnmarge"
 from GERICHT G
          join BESTELLUNG B on G.NAME = B.FK_GERICHT_NAME
-         join KALKULATION K on K.FK_GERICHT_NAME = G.NAME;
+         join AKTUELLSTEKALKULATIONEN AK on AK.FK_GERICHT_NAME = G.NAME
+where B.AUFGEGEBEN >= (CURRENT_DATE - NUMTODSINTERVAL(360, 'DAY')) -- Im letzten Jahr
+order by "Bestellungen zu Gewinnmarge" desc;
 
 -- 6
 -- Welches Lebensmittel wurde im letzten Monat am meisten gebraucht?
