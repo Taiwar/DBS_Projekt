@@ -14,16 +14,6 @@ FROM karte k
 where rn <= 5
 order by k.GEWINNMARGE desc, k.VERKAUFSPREIS desc;
 
-select G.KATEGORIE kategorie
-from GERICHT G
-group by G.KATEGORIE;
-
-select G.NAME, K.VERKAUFSPREIS, K.GEWINNMARGE
-from GERICHT G join KALKULATION K on G.NAME = K.FK_GERICHT_NAME
-where G.AKTIVIERT = 1 and G.STANDARD = 1
-order by K.GEWINNMARGE desc, K.VERKAUFSPREIS desc
-    FETCH FIRST 5 ROWS Only;
-
 -- 2
 -- Kochreihenfolge generieren/Anzeige in der Küche bereitstellen: Sortiere Komponenten von nicht fertigen
 -- Bestellungen nach Aufgabe-Datum und Zubereitungsdauer. Filtere das Ergebnis nach Kategorie und Tisch und Person.
