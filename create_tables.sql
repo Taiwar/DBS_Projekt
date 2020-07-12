@@ -197,6 +197,15 @@ alter session set nls_date_format = 'yyyy-mm-dd';
 alter session set nls_timestamp_format = 'YYYY-MM-DD HH24:MI:SS';
 
 -- Helfer-Views
+CREATE OR REPLACE VIEW AktuellsteKalkulationen AS
+SELECT *
+FROM Kalkulation K1
+where datum > ALL (
+    select datum
+    from Kalkulation K2
+    where K1.FK_GERICHT_NAME = K2.FK_GERICHT_NAME and K1.DATUM != K2.DATUM
+);
+
 CREATE OR REPLACE VIEW AktuellsteEinkaufspreise AS
 SELECT *
 FROM EINKAUFSPREIS E1

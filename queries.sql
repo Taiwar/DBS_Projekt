@@ -1,6 +1,19 @@
 -- 1
 -- Speisekarte generieren: Wähle 5 saisonale Gerichte für jede Kategorie aus und sortiere die Gerichte zu jeder
 -- Kategorie nach Marge und Verkaufspreis.
+
+WITH karte AS (
+    SELECT g.name,
+           g.KATEGORIE,
+           ak.GEWINNMARGE,
+           ak.VERKAUFSPREIS,
+           ROW_NUMBER() OVER (PARTITION BY g.KATEGORIE ORDER BY g.KATEGORIE) AS rn
+    FROM GERICHT g join AktuellsteKalkulationen ak on g.name = ak.FK_GERICHT_NAME)
+SELECT k.NAME, k.KATEGORIE, ROUND(k.GEWINNMARGE, 2), k.VERKAUFSPREIS
+FROM karte k
+where rn <= 5
+order by k.GEWINNMARGE desc, k.VERKAUFSPREIS desc;
+
 select G.KATEGORIE kategorie
 from GERICHT G
 group by G.KATEGORIE;
@@ -30,10 +43,10 @@ order by B.AUFGEGEBEN, G.ZUBEREITUNGSDAUER;
 -- 3
 -- Welches Gericht aus der Kategorie „x“ hat sich in Bezug auf die aktivierten Tage am besten verkauft?
 select distinct B.FK_GERICHT_NAME "Gericht", Round((
-    select count(*)
-    from BESTELLUNG
-    where FK_GERICHT_NAME = G.NAME
-) / G.AKTIVIERTETAGE, 3) as KaeufeProTag
+                                                       select count(*)
+                                                       from BESTELLUNG
+                                                       where FK_GERICHT_NAME = G.NAME
+                                                   ) / G.AKTIVIERTETAGE, 3) as KaeufeProTag
 from BESTELLUNG B join GERICHT G on B.FK_GERICHT_NAME = G.NAME
 where KATEGORIE = 'GETRAENK'
 order by KaeufeProTag desc;
@@ -56,9 +69,9 @@ where K.DATUM <= A.DATUM and A.DATUM - K.DATUM < ANY (
 
 
 select
-       TO_CHAR(A.DATUM, 'WW') AS "Quartal",
-       sum(A.ABRECHUNGSSUMME) "Gesamtbetrag",
-       sum(A.ABRECHUNGSSUMME - sum(K.VERKAUFSPREIS)) "Davon Trinkgeld"
+    TO_CHAR(A.DATUM, 'WW') AS "Quartal",
+    sum(A.ABRECHUNGSSUMME) "Gesamtbetrag",
+    sum(A.ABRECHUNGSSUMME - sum(K.VERKAUFSPREIS)) "Davon Trinkgeld"
 from ABRECHNUNG A
          join BESTELLUNG B on A.RECHNUNGSNR = B.FK_ABRECHNUNG_RECHNUNGSNR
          join GERICHT G on G.NAME = B.FK_GERICHT_NAME
