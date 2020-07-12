@@ -43,23 +43,30 @@ order by KaeufeProTag desc;
 
 -- 4
 -- In welcher Kalenderwoche wurde der höchste Gewinn erzielt?
-select *
-from KALKULATION;
-
-select *
+select A.BEZAHLBETRAG,
+       TO_CHAR(A.DATUM, 'WW') as KW,
+       (select sum(AEG.PREIS) from AKTUELLEREINKAUFSPREISG AEG where AEG.NAME = G.NAME) Einkaufskosten,
+       (A.BEZAHLBETRAG - (select sum(AEG.PREIS) from AKTUELLEREINKAUFSPREISG AEG where AEG.NAME = G.NAME)) Gewinn
 from ABRECHNUNG A
          join BESTELLUNG B on A.RECHNUNGSNR = B.FK_ABRECHNUNG_RECHNUNGSNR
          join GERICHT G on G.NAME = B.FK_GERICHT_NAME
          join KALKULATION K on K.FK_GERICHT_NAME = G.NAME
+         join AKTUELLEREINKAUFSPREISG AEG on AEG.NAME = G.NAME
 where K.DATUM <= A.DATUM and A.DATUM - K.DATUM < ANY (
     select A.DATUM - K2.DATUM
     from KALKULATION K2
     where K2.DATUM != K.DATUM and K2.FK_GERICHT_NAME != K.FK_GERICHT_NAME -- Nicht mit sich selbst vergleichen
 );
 
+select A.RECHNUNGSNR, G.Name
+from ABRECHNUNG A
+         join BESTELLUNG B on A.RECHNUNGSNR = B.FK_ABRECHNUNG_RECHNUNGSNR
+         join GERICHT G on G.NAME = B.FK_GERICHT_NAME
+         join KALKULATION K on K.FK_GERICHT_NAME = G.NAME;
+
 
 select
-    TO_CHAR(A.DATUM, 'WW') AS "Quartal",
+    TO_CHAR(A.DATUM, 'WW') AS "KW",
     sum(A.ABRECHUNGSSUMME) "Gesamtbetrag",
     sum(A.ABRECHUNGSSUMME - sum(K.VERKAUFSPREIS)) "Davon Trinkgeld"
 from ABRECHNUNG A
@@ -76,10 +83,10 @@ group by TO_CHAR(A.DATUM, 'WW'); -- Kalkulation, die älter als Abrechnungsdatum
 
 -- 5
 -- Sortiere Gerichte nach bestem Verhältnis von Marge zu Bestellungen in einem bestimmten Zeitraum.
-select G.NAME "Gerichtsname", K.GEWINNMARGE "Gewinnmarge", (
+select distinct G.NAME "Gerichtsname", Round(K.GEWINNMARGE, 2) "Gewinnmarge", (
     select count(*)
-    from BESTELLUNG
-    where B.FK_GERICHT_NAME = G.NAME
+    from BESTELLUNG B2
+    where B2.FK_GERICHT_NAME = G.NAME
 ) "Bestellungen"
 from GERICHT G
          join BESTELLUNG B on G.NAME = B.FK_GERICHT_NAME
