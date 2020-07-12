@@ -784,12 +784,24 @@ call createKalkulationen();
 
 
 -- Saison
+insert into SAISON values ('Frühling', 8, 15);
 insert into SAISON values ('Sommer', 16, 40);
 
 -- Speisekarte
-
+insert into SPEISEKARTE values ('Frühlingskarte', 'Frühling', '2020-03-15', '2020-04-20', '');
+insert into SPEISEKARTE values ('Sommerkarte', 'Sommer', '2020-05-20', '2020-08-20', '');
 
 -- GerichtSpeisekarte
+insert into GERICHTSPEISEKARTE values ('Zwiebelrostbraten mit Spätzle', 'Frühlingskarte');
+insert into GERICHTSPEISEKARTE values ('ofengegarte Austern', 'Frühlingskarte');
+insert into GERICHTSPEISEKARTE values ('Flädlessuppe', 'Frühlingskarte');
+insert into GERICHTSPEISEKARTE values ('Käsespätzle', 'Frühlingskarte');
+insert into GERICHTSPEISEKARTE values ('Sprudel', 'Frühlingskarte');
+insert into GERICHTSPEISEKARTE values ('Kürbiscremesuppe', 'Sommerkarte');
+insert into GERICHTSPEISEKARTE values ('Antipasti-Platte', 'Sommerkarte');
+insert into GERICHTSPEISEKARTE values ('Gratinierte Spargelpfannkuchen', 'Sommerkarte');
+insert into GERICHTSPEISEKARTE values ('Tomatensuppe', 'Sommerkarte');
+insert into GERICHTSPEISEKARTE values ('Chili con carne mit ofenfrischem Baguette', 'Sommerkarte');
 
 
 /**
