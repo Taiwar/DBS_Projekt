@@ -755,7 +755,10 @@ begin
                         verkaufspreis := Round(einkaufsPreis.PREIS * (kostenmarge + gewinnmarge), 1);
                     end if;
                     -- Gewinnmarge zurückermitteln auf gerundeten Verkaufspreis oder maximalen Verkaufspreis
-                    gewinnmarge := (verkaufspreis - (einkaufsPreis.PREIS * kostenmarge))/einkaufsPreis.PREIS;
+                    if einkaufsPreis.PREIS > 0
+                    then
+                        gewinnmarge := (verkaufspreis - (einkaufsPreis.PREIS * kostenmarge))/einkaufsPreis.PREIS;
+                    end if;
                     insert into KALKULATION values (
                                                        einkaufsPreis.PREIS,
                                                        verkaufspreis,
@@ -764,7 +767,7 @@ begin
                                                        (
                                                            SELECT einkaufsPreis.DATUM +
                                                                   DBMS_RANDOM.VALUE(0, TO_DATE('2019-09-30 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
-                                                                                       einkaufsPreis.DATUM)
+                                                                                       CAST(einkaufsPreis.DATUM AS DATE))
                                                            FROM dual
                                                        ),
                                                        einkaufsPreis.NAME
@@ -772,8 +775,10 @@ begin
                 end loop;
         end loop;
 end;
+/
 
 call createKalkulationen();
+
 
 -- Saison
 insert into SAISON values ('Sommer', 16, 40);
@@ -905,7 +910,7 @@ insert into ABRECHNUNG values (14, 150.30, 16.00, '2020-02-13', 2, 5);
 --             end if;
 --         end loop;
 -- end;
---
+--/
 -- delete from BESTELLUNG;
 --
 --
@@ -996,6 +1001,7 @@ begin
             where ein.PREIS = e.PREIS and ein.FK_LEBENSMITTEL_NAME = e.FK_LEBENSMITTEL_NAME;
         end loop;
 end;
+/
 
 call shuffleEinkaufspreisDates();
 
@@ -1015,6 +1021,7 @@ begin
             where kal.GEWINNMARGE = k.GEWINNMARGE and kal.KOSTENMARGE = k.KOSTENMARGE and kal.FK_GERICHT_NAME = k.FK_GERICHT_NAME;
         end loop;
 end;
+/
 
 call shuffleKalkulationDates();
 
@@ -1034,6 +1041,7 @@ begin
             where tis.NUMMER = t.NUMMER;
         end loop;
 end;
+/
 
 call shuffleTischZBDates();
 
@@ -1056,6 +1064,7 @@ begin
             where abr.RECHNUNGSNR = a.RECHNUNGSNR;
         end loop;
 end;
+/
 
 call shuffleAbrechnungDates();
 
@@ -1075,5 +1084,6 @@ begin
             where bes.BESTELLNR = b.BESTELLNR;
         end loop;
 end;
+/
 
 call shuffleBestellungDates();
