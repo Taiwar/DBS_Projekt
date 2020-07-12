@@ -105,6 +105,30 @@ from GERICHT G
 
 -- 6
 -- Welches Lebensmittel wurde im letzten Monat am meisten gebraucht?
+select L.NAME, NVL(ROUND((
+           select sum((
+                      select MENGELEBENSMITTEL
+                      from LebensMittelMengeInKM LKM
+                      where B.FK_GERICHT_NAME = LKM.GERICHTNAME AND
+                              L.NAME = LKM.LMNAME
+                  ) * count(*))
+           from BESTELLUNG B
+           where B.AUFGEGEBEN >= (CURRENT_DATE - NUMTODSINTERVAL(30, 'DAY'))
+           group by FK_GERICHT_NAME
+           having (
+                      select MENGELEBENSMITTEL
+                      from LebensMittelMengeInKM LKM
+                      where B.FK_GERICHT_NAME = LKM.GERICHTNAME AND
+                              L.NAME = LKM.LMNAME
+                  ) * count(*) is not null
+       ), 2), 0) Benutzt,
+       NVL((
+           select distinct EINHEIT
+           from LEBENSMITTELMENGE LM
+           where L.NAME = LM.FK_LEBENSMITTEL_NAME
+       ), '-') Einheit
+from LEBENSMITTEL L
+order by Einheit desc, Benutzt desc;
 
 -- 7
 -- Was ist die durchschnittliche Aufenthaltsdauer eines Gastes im Restaurant und wieviel Geld gibt er dabei aus?

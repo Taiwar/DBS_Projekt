@@ -347,7 +347,7 @@ insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Zwiebeln gewürfelt', 200, 'G
 -- Knoblauch gewürfelt
 insert into LEBENSMITTELMENGE values ('Knoblauch', 'Knoblauch gewürfelt', 200, 'GRAMM');
 -- Zitronensaft
-insert into LEBENSMITTELMENGE values ('Zitronen', 'Zitronensaft', 20, 'ML');
+insert into LEBENSMITTELMENGE values ('Zitronen', 'Zitronensaft', 100, 'GRAMM');
 -- Zitronenschale
 insert into LEBENSMITTELMENGE values ('Zitronen', 'Zitronenschale', 5, 'GRAMM');
 -- Galgant gerieben
@@ -407,14 +407,14 @@ insert into LEBENSMITTELMENGE values ('Zucker', 'Schweinemedaillons gebraten', 1
 insert into LEBENSMITTELMENGE values ('Butterschmalz', 'Schweinemedaillons gebraten', 50, 'GRAMM');
 -- Kartoffeln gekocht/geschält
 insert into LEBENSMITTELMENGE values ('Kartoffeln', 'Kartoffeln gekocht/geschält', 5000, 'GRAMM');
-insert into LEBENSMITTELMENGE values ('Wasser', 'Kartoffeln gekocht/geschält', 8000, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Wasser', 'Kartoffeln gekocht/geschält', 8000, 'ML');
 insert into LEBENSMITTELMENGE values ('Salz', 'Kartoffeln gekocht/geschält', 20, 'GRAMM');
 -- Flädle
 insert into LEBENSMITTELMENGE values ('Mehl', 'Flädle', 300, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Milch', 'Flädle', 600, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Eier', 'Flädle', 8, 'STK');
 insert into LEBENSMITTELMENGE values ('Zucker', 'Flädle', 80, 'GRAMM');
-insert into LEBENSMITTELMENGE values ('Olivenöl', 'Flädle', 8, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Olivenöl', 'Flädle', 8, 'ML');
 insert into LEBENSMITTELMENGE values ('Pfeffer', 'Flädle', 8, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Schnittlauch', 'Flädle', 20, 'GRAMM');
 -- Rostbraten gebraten
@@ -472,18 +472,18 @@ insert into LEBENSMITTELMENGE values ('Weißwein', 'Weißweinsoße', 1000, 'ML')
 insert into LEBENSMITTELMENGE values ('Wasser', 'Weißweinsoße', 2000, 'ML');
 insert into LEBENSMITTELMENGE values ('Zitronen', 'Weißweinsoße', 200, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Weißweinsoße', 200, 'GRAMM');
-insert into LEBENSMITTELMENGE values ('Sahne', 'Weißweinsoße', 400, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Sahne', 'Weißweinsoße', 400, 'ML');
 -- Rahmsoße
 insert into LEBENSMITTELMENGE values ('Wasser', 'Rahmsoße', 2000, 'ML');
 insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Rahmsoße', 200, 'GRAMM');
-insert into LEBENSMITTELMENGE values ('Sahne', 'Rahmsoße', 400, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Sahne', 'Rahmsoße', 400, 'ML');
 insert into LEBENSMITTELMENGE values ('Salz', 'Rahmsoße', 20, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Pfeffer', 'Rahmsoße', 10, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Mehl', 'Rahmsoße', 40, 'GRAMM');
 -- Pilzrahmsoße
 insert into LEBENSMITTELMENGE values ('Wasser', 'Pilzrahmsoße', 2000, 'ML');
 insert into LEBENSMITTELMENGE values ('Zwiebeln', 'Pilzrahmsoße', 200, 'GRAMM');
-insert into LEBENSMITTELMENGE values ('Sahne', 'Pilzrahmsoße', 400, 'GRAMM');
+insert into LEBENSMITTELMENGE values ('Sahne', 'Pilzrahmsoße', 400, 'ML');
 insert into LEBENSMITTELMENGE values ('Salz', 'Pilzrahmsoße', 20, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Pfeffer', 'Pilzrahmsoße', 10, 'GRAMM');
 insert into LEBENSMITTELMENGE values ('Mehl', 'Pilzrahmsoße', 40, 'GRAMM');

@@ -222,8 +222,7 @@ SELECT
     AE.datum Datum
 FROM LEBENSMITTELMENGE LM
          join LEBENSMITTEL L on L.NAME = LM.FK_LEBENSMITTEL_NAME
-         join AktuellsteEinkaufspreise AE on AE.FK_LEBENSMITTEL_NAME = L.NAME
-;
+         join AktuellsteEinkaufspreise AE on AE.FK_LEBENSMITTEL_NAME = L.NAME;
 
 CREATE OR REPLACE VIEW AktuellerEinkaufspreisK AS
 SELECT K.NAME Name, sum(ALM.PREIS) Preis, K.GRUNDMENGE Menge, ALM.Datum Datum
@@ -237,12 +236,20 @@ SELECT
     AEK.Preis * (KM.MENGE / AEK.Menge) Preis, KM.MENGE Menge, KM.EINHEIT Einheit, AEK.Datum Datum
 FROM KOMPONENTENMENGE KM
          join KOMPONENTE K on K.NAME = KM.FK_KOMPONENTE_NAME
-         join AktuellerEinkaufspreisK AEK on AEK.Name = K.NAME
-;
-
+         join AktuellerEinkaufspreisK AEK on AEK.Name = K.NAME;
 
 CREATE OR REPLACE VIEW AktuellerEinkaufspreisG AS
 SELECT G.NAME Name, ROUND(sum(AEM.PREIS), 2) Preis, AEM.Datum Datum
 FROM GERICHT G
          join AktuellerEinkaufspreisKM AEM on AEM.GerichtName = G.NAME
 group by G.Name, AEM.Datum;
+
+CREATE OR REPLACE VIEW LebensMittelMengeInKM AS
+SELECT distinct
+    LMM.FK_LEBENSMITTEL_NAME LMName, KM.FK_GERICHT_NAME Gerichtname,
+    sum((KM.MENGE / AEK.Menge)*LMM.Menge) MengeLebensmittel
+FROM KOMPONENTENMENGE KM
+         join KOMPONENTE K on K.NAME = KM.FK_KOMPONENTE_NAME
+         join AktuellerEinkaufspreisK AEK on AEK.Name = K.NAME
+         join LEBENSMITTELMENGE LMM on LMM.FK_KOMPONENTE_NAME = K.NAME
+group by LMM.FK_LEBENSMITTEL_NAME, KM.FK_GERICHT_NAME;
