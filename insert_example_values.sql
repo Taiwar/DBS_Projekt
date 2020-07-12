@@ -1,3 +1,6 @@
+alter session set nls_date_format = 'yyyy-mm-dd';
+alter session set nls_timestamp_format = 'YYYY-MM-DD HH24:MI:SS';
+
 /**
   >===========================================================================================================<
   >================================================Felix======================================================<
@@ -853,70 +856,21 @@ insert into PERSON values (8, 'GEBURTSTAGSKIND', 8);
 insert into PERSON values (9, 'NEIN', 8);
 
 -- Abrechnungen
-insert into ABRECHNUNG values (1, 10.50, 11.00, '2020-02-13', 1, 1);
-insert into ABRECHNUNG values (2, 52.00, 55.00, '2020-02-13', 1, 2);
-insert into ABRECHNUNG values (3, 51.90, 60.00, '2020-02-13', 2, 2);
-insert into ABRECHNUNG values (4, 20.00, 20.00, '2020-02-13', 3, 3);
-insert into ABRECHNUNG values (5, 15.50, 16.00, '2020-02-13', 1, 4);
-insert into ABRECHNUNG values (6, 52.00, 55.00, '2020-02-13', 1, 5);
-insert into ABRECHNUNG values (7, 52.00, 55.00, '2020-02-13', 2, 5);
-insert into ABRECHNUNG values (8, 51.90, 60.00, '2020-02-13', 2, 6);
-insert into ABRECHNUNG values (9, 20.00, 20.00, '2020-02-13', 3, 7);
-insert into ABRECHNUNG values (10, 150.30, 16.00, '2020-02-13', 1, 8);
-insert into ABRECHNUNG values (11, 52.00, 55.00, '2020-02-13', 1, 1);
-insert into ABRECHNUNG values (12, 51.90, 60.00, '2020-02-13', 2, 1);
-insert into ABRECHNUNG values (13, 20.00, 20.00, '2020-02-13', 2, 4);
-insert into ABRECHNUNG values (14, 150.30, 16.00, '2020-02-13', 2, 5);
+insert into ABRECHNUNG values (1, 0, 0, '2020-02-14', 1, 1);
+insert into ABRECHNUNG values (2, 0, 0, '2020-02-15', 1, 2);
+insert into ABRECHNUNG values (3, 0, 0, '2020-02-16', 2, 2);
+insert into ABRECHNUNG values (4, 0, 0, '2020-02-17', 3, 3);
+insert into ABRECHNUNG values (5, 0, 0, '2020-02-18', 1, 4);
+insert into ABRECHNUNG values (6, 0, 0, '2020-02-19', 1, 5);
+insert into ABRECHNUNG values (7, 0, 0, '2020-02-20', 2, 5);
+insert into ABRECHNUNG values (9, 0, 0, '2020-02-21', 3, 7);
+insert into ABRECHNUNG values (10, 0, 0, '2020-02-22', 1, 8);
+insert into ABRECHNUNG values (12, 0, 0, '2020-02-24', 2, 1);
+insert into ABRECHNUNG values (13, 0, 0, '2020-02-25', 2, 4);
+insert into ABRECHNUNG values (14, 0, 0, '2020-02-26', 2, 5);
 
 
 -- Bestellungen
-
--- create or replace procedure createBestellungen
---     is
---     counter number;
---     datetime timestamp;
---     tischNr number;
---     sitzplatzNr number;
---     rand number;
--- begin
---     counter := 1;
---     -- Offene Bestellungen generieren
---     for ger in (select * from GERICHT)
---         loop
---             -- Jedes Gericht hat 10% chance eine offene Bestellung zu werden
---             select DBMS_RANDOM.VALUE(0, 1) into rand from dual;
---             if 1 = 1
---             then
---                 SELECT (CURRENT_TIMESTAMP - NUMTODSINTERVAL(1, 'HOUR')) +
---                        DBMS_RANDOM.VALUE(0, CURRENT_DATE - (CURRENT_DATE - NUMTODSINTERVAL(1, 'HOUR')))
---                 into datetime
---                 FROM dual;
---                 select count(*) into tischNr from TISCH;
---                 tischNr := DBMS_RANDOM.VALUE(1, tischNr);
---                 select ANZAHLPLAETZE into sitzplatzNr from TISCH where NUMMER = tischNr;
---                 sitzplatzNr := DBMS_RANDOM.VALUE(1, sitzplatzNr);
---                 insert into BESTELLUNG values (
---                                                   counter,
---                                                   0.0,
---                                                   0,
---                                                   1,
---                                                   datetime,
---                                                   null,
---                                                   ger.NAME,
---                                                   sitzplatzNr,
---                                                   tischNr
---                                               );
---                 counter := counter + 1;
---             end if;
---         end loop;
--- end;
---/
--- delete from BESTELLUNG;
---
---
--- select * from BESTELLUNG;
--- call createBestellungen();
-
 insert into BESTELLUNG values (1, 0.0, 0, 1, '2020-02-13', 1, 'Käsespätzle', 1, 1);
 insert into BESTELLUNG values (2, 0.0, 0, 1, '2020-02-13', 1, 'Käsespätzle', 2, 1);
 insert into BESTELLUNG values (3, 0.0, 0, 1, '2020-02-13', 9, 'Käsespätzle', 8, 7);
@@ -966,8 +920,6 @@ insert into BESTELLUNG values (46, 0.0, 1, 1, '2020-02-13', 10, 'Gratinierte Spa
 insert into BESTELLUNG values (47, 0.0, 0, 1, '2020-02-13', 2, 'Gratinierte Spargelpfannkuchen', 3, 1);
 insert into BESTELLUNG values (48, 0.0, 0, 1, '2020-02-13', 2, 'Gratinierte Spargelpfannkuchen', 4, 1);
 -- Nicht abgerechnet
--- TODO: "Aufgegeben" soll aktuelle Systemzeit - 2h gewürfelt werden
--- TODO: Bzw. Bestellungen mit Funktion generieren
 insert into BESTELLUNG values (49, 0.0, 0, 0, '2020-02-13', null, 'Zimtapfelküchle', 1, 1);
 insert into BESTELLUNG values (50, 0.0, 0, 0, '2020-02-13', null, 'Sprudel', 1, 1);
 insert into BESTELLUNG values (51, 0.0, 0, 0, '2020-02-13', null, 'Zwiebelrostbraten mit Spätzle', 2, 2);
@@ -1045,40 +997,77 @@ end;
 
 call shuffleTischZBDates();
 
+select *
+from ABRECHNUNG join BESTELLUNG on RECHNUNGSNR = FK_ABRECHNUNG_RECHNUNGSNR
+where RECHNUNGSNR = 9;
+
 -- Alle Abrechnungs-Daten würfeln
 create or replace procedure shuffleAbrechnungDates
     is
+    summeBestellungen number;
+    trinkgeld number;
+    betrag number;
 begin
     for abr in (select * from ABRECHNUNG)
         loop
+            select sum(K.VERKAUFSPREIS)
+            into summeBestellungen
+            from BESTELLUNG B
+                     join GERICHT G on G.NAME = B.FK_GERICHT_NAME
+                     join AKTUELLSTEKALKULATIONEN K on K.FK_GERICHT_NAME = G.NAME
+            where B.FK_ABRECHNUNG_RECHNUNGSNR = abr.RECHNUNGSNR
+--               AND
+--                     K.DATUM <= abr.DATUM and abr.DATUM - K.DATUM < ANY (
+--                 select abr.DATUM - K2.DATUM
+--                 from KALKULATION K2
+--                 where K2.DATUM != K.DATUM and K2.FK_GERICHT_NAME != K.FK_GERICHT_NAME -- Nicht mit sich selbst vergleichen
+--             )
+            group by B.FK_ABRECHNUNG_RECHNUNGSNR;
+
+            select DBMS_RANDOM.VALUE(0, 20)
+            into trinkgeld
+            from dual;
+
+            betrag := ROUND(summeBestellungen + trinkgeld, 0);
+
             update ABRECHNUNG a
-            set DATUM = (
-                select TO_DATE(
-                               TRUNC(
-                                       DBMS_RANDOM.VALUE(TO_CHAR(DATE '2019-10-01','J')
-                                           ,TO_CHAR(DATE '2020-07-10','J')
-                                           )
-                                   ),'J'
-                           ) from DUAL
-            )
-            where abr.RECHNUNGSNR = a.RECHNUNGSNR;
+            set
+                DATUM = (
+                    SELECT TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
+                           DBMS_RANDOM.VALUE(0, TO_DATE('2020-07-10 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
+                                                TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                    FROM dual
+                ),
+                ABRECHUNGSSUMME = summeBestellungen,
+                BEZAHLBETRAG = betrag
+            where RECHNUNGSNR = abr.RECHNUNGSNR;
         end loop;
 end;
 /
 
 call shuffleAbrechnungDates();
 
+select *
+from ABRECHNUNG;
+
 -- Alle Bestellungs-Daten würfeln
 create or replace procedure shuffleBestellungDates
     is
+    abrechnungsDatum timestamp;
 begin
     for bes in (select * from BESTELLUNG)
         loop
-            update BESTELLUNG b
+            -- Bestellung muss jünger als Abrechnungsdatum sein (innerhalb 4h davor)
+            select DATUM
+            into abrechnungsDatum
+            from ABRECHNUNG A
+            where A.RECHNUNGSNR = bes.FK_ABRECHNUNG_RECHNUNGSNR;
+
+            update BESTELLUNG B
             set AUFGEGEBEN = (
-                SELECT TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
-                       DBMS_RANDOM.VALUE(0, TO_DATE('2020-07-10 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
-                                            TO_DATE('2019-10-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
+                SELECT abrechnungsDatum +
+                       DBMS_RANDOM.VALUE(0, CAST(abrechnungsDatum - NUMTODSINTERVAL(4, 'HOUR') AS DATE) -
+                                            CAST(abrechnungsDatum AS DATE))
                 FROM dual
             )
             where bes.BESTELLNR = b.BESTELLNR;

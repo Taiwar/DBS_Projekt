@@ -118,6 +118,10 @@ group by FK_GERICHT_NAME
 Select (A.DATUM-B.AUFGEGEBEN)
 from BESTELLUNG B
          join ABRECHNUNG A on B.FK_ABRECHNUNG_RECHNUNGSNR = A.RECHNUNGSNR
+where B.BESTELLNR = (
+    select min(B2.BESTELLNR)
+    from  BESTELLUNG B2
+    where A.RECHNUNGSNR = B2.BESTELLNR);
 
 -- 8
 -- Wie viel Trinkgeld wird im Schnitt gegeben? (Für alle Bestellungen: Trinkgeld = Bezahlbetrag - Summe Preis Bestellungen)
