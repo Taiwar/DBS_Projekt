@@ -721,56 +721,56 @@ begin
     maxVKTrue := 0;
     -- Für jeden aktuellen Einkaufspreis 3 Kalkulationen erstellen
     for i in 1..3
-    loop
-        -- Für jeden aktuellen Einkaufspreis
-        for einkaufsPreis in (select * from AKTUELLEREINKAUFSPREISG)
         loop
-            maxVKTrue := 0;
-            gewinnmargeMax := 0.0;
-            -- Verkaufpreis berechnen für Standardkalkulation
-            verkaufspreis := einkaufsPreis.PREIS * (standardGewinnmarge + 0.5 + kostenmarge);
-            -- Verkaufspreis darf einen maximalenen Verkaufspreis nicht übersteigen
-            if verkaufspreis >= maximalVerkaufspreis
-            then
-                -- Die Kosten sollten aber in jedem Fall gedeckt sein (wenn möglich)
-                verkaufspreis := einkaufsPreis.PREIS * kostenmarge;
-                if verkaufspreis >= maximalVerkaufspreis
-                then
-                    -- wenn keine Kostendeckung möglich ist, dann den maximalen Verkaufspreis verlangen
-                    verkaufspreis := maximalVerkaufspreis;
-                    maxVKTrue := 1;
-                else
-                    -- wenn eine Kostendeckung möglich ist, dann die maximal mögliche Gewinnmarge zum maximalen
-                    -- Verkaufspreis berechnen
-                    gewinnmargeMAX := (maximalVerkaufspreis - (einkaufsPreis.PREIS * kostenmarge))/einkaufsPreis.PREIS;
-                end if;
-            else
-                -- "Fehlertoleranz" sollte bei Standardkalkulation
-                gewinnmargeMax := standardGewinnmarge + 0.5;
-            end if;
-            -- Nur wenn kein maximaler Verkaufspreis gesetzt wurde gewinnmarge und verkaufspreis berechnen
-            if maxVKTrue = 0 Then
-                -- Verkaufspreis aus Gewinnmarge zufällig ermitteln und auf 0,10 Cent runden
-                gewinnmarge := DBMS_RANDOM.VALUE(standardGewinnmarge, gewinnmargeMax);
-                verkaufspreis := Round(einkaufsPreis.PREIS * (kostenmarge + gewinnmarge), 1);
-            end if;
-            -- Gewinnmarge zurückermitteln auf gerundeten Verkaufspreis oder maximalen Verkaufspreis
-            gewinnmarge := (verkaufspreis - (einkaufsPreis.PREIS * kostenmarge))/einkaufsPreis.PREIS;
-            insert into KALKULATION values (
-                                               einkaufsPreis.PREIS,
-                                               verkaufspreis,
-                                               gewinnmarge,
-                                               kostenmarge,
-                                               (
-                                                   SELECT einkaufsPreis.DATUM +
-                                                          DBMS_RANDOM.VALUE(0, TO_DATE('2019-09-30 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
-                                                                               einkaufsPreis.DATUM)
-                                                   FROM dual
-                                               ),
-                                               einkaufsPreis.NAME
-                                           );
+            -- Für jeden aktuellen Einkaufspreis
+            for einkaufsPreis in (select * from AKTUELLEREINKAUFSPREISG)
+                loop
+                    maxVKTrue := 0;
+                    gewinnmargeMax := 0.0;
+                    -- Verkaufpreis berechnen für Standardkalkulation
+                    verkaufspreis := einkaufsPreis.PREIS * (standardGewinnmarge + 0.5 + kostenmarge);
+                    -- Verkaufspreis darf einen maximalenen Verkaufspreis nicht übersteigen
+                    if verkaufspreis >= maximalVerkaufspreis
+                    then
+                        -- Die Kosten sollten aber in jedem Fall gedeckt sein (wenn möglich)
+                        verkaufspreis := einkaufsPreis.PREIS * kostenmarge;
+                        if verkaufspreis >= maximalVerkaufspreis
+                        then
+                            -- wenn keine Kostendeckung möglich ist, dann den maximalen Verkaufspreis verlangen
+                            verkaufspreis := maximalVerkaufspreis;
+                            maxVKTrue := 1;
+                        else
+                            -- wenn eine Kostendeckung möglich ist, dann die maximal mögliche Gewinnmarge zum maximalen
+                            -- Verkaufspreis berechnen
+                            gewinnmargeMAX := (maximalVerkaufspreis - (einkaufsPreis.PREIS * kostenmarge))/einkaufsPreis.PREIS;
+                        end if;
+                    else
+                        -- "Fehlertoleranz" sollte bei Standardkalkulation
+                        gewinnmargeMax := standardGewinnmarge + 0.5;
+                    end if;
+                    -- Nur wenn kein maximaler Verkaufspreis gesetzt wurde gewinnmarge und verkaufspreis berechnen
+                    if maxVKTrue = 0 Then
+                        -- Verkaufspreis aus Gewinnmarge zufällig ermitteln und auf 0,10 Cent runden
+                        gewinnmarge := DBMS_RANDOM.VALUE(standardGewinnmarge, gewinnmargeMax);
+                        verkaufspreis := Round(einkaufsPreis.PREIS * (kostenmarge + gewinnmarge), 1);
+                    end if;
+                    -- Gewinnmarge zurückermitteln auf gerundeten Verkaufspreis oder maximalen Verkaufspreis
+                    gewinnmarge := (verkaufspreis - (einkaufsPreis.PREIS * kostenmarge))/einkaufsPreis.PREIS;
+                    insert into KALKULATION values (
+                                                       einkaufsPreis.PREIS,
+                                                       verkaufspreis,
+                                                       gewinnmarge,
+                                                       kostenmarge,
+                                                       (
+                                                           SELECT einkaufsPreis.DATUM +
+                                                                  DBMS_RANDOM.VALUE(0, TO_DATE('2019-09-30 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
+                                                                                       einkaufsPreis.DATUM)
+                                                           FROM dual
+                                                       ),
+                                                       einkaufsPreis.NAME
+                                                   );
+                end loop;
         end loop;
-    end loop;
 end;
 
 call createKalkulationen();
@@ -865,6 +865,53 @@ insert into ABRECHNUNG values (14, 150.30, 16.00, '2020-02-13', 2, 5);
 
 
 -- Bestellungen
+
+-- create or replace procedure createBestellungen
+--     is
+--     counter number;
+--     datetime timestamp;
+--     tischNr number;
+--     sitzplatzNr number;
+--     rand number;
+-- begin
+--     counter := 1;
+--     -- Offene Bestellungen generieren
+--     for ger in (select * from GERICHT)
+--         loop
+--             -- Jedes Gericht hat 10% chance eine offene Bestellung zu werden
+--             select DBMS_RANDOM.VALUE(0, 1) into rand from dual;
+--             if 1 = 1
+--             then
+--                 SELECT (CURRENT_TIMESTAMP - NUMTODSINTERVAL(1, 'HOUR')) +
+--                        DBMS_RANDOM.VALUE(0, CURRENT_DATE - (CURRENT_DATE - NUMTODSINTERVAL(1, 'HOUR')))
+--                 into datetime
+--                 FROM dual;
+--                 select count(*) into tischNr from TISCH;
+--                 tischNr := DBMS_RANDOM.VALUE(1, tischNr);
+--                 select ANZAHLPLAETZE into sitzplatzNr from TISCH where NUMMER = tischNr;
+--                 sitzplatzNr := DBMS_RANDOM.VALUE(1, sitzplatzNr);
+--                 insert into BESTELLUNG values (
+--                                                   counter,
+--                                                   0.0,
+--                                                   0,
+--                                                   1,
+--                                                   datetime,
+--                                                   null,
+--                                                   ger.NAME,
+--                                                   sitzplatzNr,
+--                                                   tischNr
+--                                               );
+--                 counter := counter + 1;
+--             end if;
+--         end loop;
+-- end;
+--
+-- delete from BESTELLUNG;
+--
+--
+-- select * from BESTELLUNG;
+-- call createBestellungen();
+
 insert into BESTELLUNG values (1, 0.0, 0, 1, '2020-02-13', 1, 'Käsespätzle', 1, 1);
 insert into BESTELLUNG values (2, 0.0, 0, 1, '2020-02-13', 1, 'Käsespätzle', 2, 1);
 insert into BESTELLUNG values (3, 0.0, 0, 1, '2020-02-13', 9, 'Käsespätzle', 8, 7);
