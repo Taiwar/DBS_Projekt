@@ -1009,10 +1009,6 @@ end;
 
 call shuffleTischZBDates();
 
-select *
-from ABRECHNUNG join BESTELLUNG on RECHNUNGSNR = FK_ABRECHNUNG_RECHNUNGSNR
-where RECHNUNGSNR = 9;
-
 -- Alle Abrechnungs-Daten würfeln
 create or replace procedure shuffleAbrechnungDates
     is
@@ -1058,9 +1054,6 @@ end;
 /
 
 call shuffleAbrechnungDates();
-
-select *
-from ABRECHNUNG;
 
 -- Alle Bestellungs-Daten würfeln
 create or replace procedure shuffleBestellungDates
