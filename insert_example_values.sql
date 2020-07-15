@@ -16,7 +16,7 @@ insert into LEBENSMITTEL values ('Gemüsebrühe', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 insert into LEBENSMITTEL values ('Rinderbouillon', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 insert into LEBENSMITTEL values ('Parmesan', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 insert into LEBENSMITTEL values ('Spaghetti', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-insert into LEBENSMITTEL values ('Eier', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+insert into LEBENSMITTEL values ('Eier', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 insert into LEBENSMITTEL values ('Speck', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 insert into LEBENSMITTEL values ('Salz', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 insert into LEBENSMITTEL values ('Pfeffer', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
