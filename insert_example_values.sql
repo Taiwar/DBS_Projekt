@@ -933,8 +933,8 @@ insert into BESTELLUNG values (47, 0.0, 0, 1, '2020-02-13', 2, 'Gratinierte Spar
 insert into BESTELLUNG values (48, 0.0, 0, 1, '2020-02-13', 2, 'Gratinierte Spargelpfannkuchen', 4, 1);
 -- Nicht abgerechnet
 insert into BESTELLUNG values (49, 0.0, 0, 0, '2020-02-13', null, 'Zimtapfelküchle', 1, 1);
-insert into BESTELLUNG values (50, 0.0, 0, 0, '2020-02-13', null, 'Sprudel', 1, 1);
-insert into BESTELLUNG values (51, 0.0, 0, 0, '2020-02-13', null, 'Zwiebelrostbraten mit Spätzle', 2, 2);
+insert into BESTELLUNG values (50, 0.0, 0, 0, '2020-02-13', null, 'Zwiebelrostbraten mit Spätzle', 1, 1);
+insert into BESTELLUNG values (51, 0.0, 0, 0, '2020-02-13', null, 'Sprudel', 2, 2);
 insert into BESTELLUNG values (52, 0.0, 0, 0, '2020-02-13', null, 'Rotwein', 1, 4);
 insert into BESTELLUNG values (53, 0.0, 0, 0, '2020-02-13', null, 'Bier', 2, 1);
 insert into BESTELLUNG values (54, 0.0, 0, 0, '2020-02-13', null, 'Sprudel', 2, 4);
