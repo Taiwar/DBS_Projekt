@@ -253,3 +253,64 @@ FROM KOMPONENTENMENGE KM
          join AktuellerEinkaufspreisK AEK on AEK.Name = K.NAME
          join LEBENSMITTELMENGE LMM on LMM.FK_KOMPONENTE_NAME = K.NAME
 group by LMM.FK_LEBENSMITTEL_NAME, KM.FK_GERICHT_NAME;
+
+CREATE OR REPLACE View AllergeneInKomponente AS
+  SELECT 
+    K.NAME Komponente, 
+    K.KATEGORIE,
+    L.NAME Lebensmittel,
+    L.milch,
+    L.gluteinhaltiges_getreide,
+    L.haselnuss,
+    L.krebstiere,
+    L.eier,
+    L.fisch,
+    L.erdnuss,
+    L.soja,
+    L.schalenfruechte,
+    L.sellerie,
+    L.senf,
+    L.sesamsamen,
+    L.schwefeldioxid,
+    L.lupine,
+    L.weichtiere
+from KOMPONENTENMENGE KM
+         join KOMPONENTE K on K.NAME = KM.FK_KOMPONENTE_NAME
+         join AktuellerEinkaufspreisK AEK on AEK.Name = K.NAME
+         join LEBENSMITTELMENGE LMM on LMM.FK_KOMPONENTE_NAME = K.NAME
+         join LEBENSMITTEL L on L.NAME = LMM.FK_LEBENSMITTEL_NAME
+where not(
+    L.milch = 0 and
+    L.gluteinhaltiges_getreide = 0 and
+    L.haselnuss = 0 and
+    L.krebstiere = 0 and
+    L.eier = 0 and
+    L.fisch = 0 and
+    L.erdnuss = 0 and
+    L.soja = 0 and
+    L.schalenfruechte = 0 and
+    L.sellerie = 0 and
+    L.senf = 0 and
+    L.sesamsamen = 0 and
+    L.schwefeldioxid = 0 and
+    L.lupine = 0 and
+    L.weichtiere = 0)
+group by     
+    K.NAME, 
+    L.NAME,
+    K.KATEGORIE,
+    L.milch,
+    L.gluteinhaltiges_getreide,
+    L.haselnuss,
+    L.krebstiere,
+    L.eier,
+    L.fisch,
+    L.erdnuss,
+    L.soja,
+    L.schalenfruechte,
+    L.sellerie,
+    L.senf,
+    L.sesamsamen,
+    L.schwefeldioxid,
+    L.lupine,
+    L.weichtiere;
