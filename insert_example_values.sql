@@ -1043,10 +1043,15 @@ begin
     for bes in (select * from BESTELLUNG)
         loop
             -- Bestellung muss jünger als Abrechnungsdatum sein (innerhalb 4h davor)
-            select DATUM
-            into abrechnungsDatum
-            from ABRECHNUNG A
-            where A.RECHNUNGSNR = bes.FK_ABRECHNUNG_RECHNUNGSNR;
+            if bes.FK_ABRECHNUNG_RECHNUNGSNR is null
+            then
+                abrechnungsDatum := CURRENT_TIMESTAMP - NUMTODSINTERVAL(4, 'HOUR');
+            else
+                select DATUM
+                into abrechnungsDatum
+                from ABRECHNUNG A
+                where A.RECHNUNGSNR = bes.FK_ABRECHNUNG_RECHNUNGSNR;
+            end if;
 
             update BESTELLUNG B
             set AUFGEGEBEN = (
@@ -1061,3 +1066,6 @@ end;
 /
 
 call shuffleBestellungDates();
+
+select *
+from Bestellung;
