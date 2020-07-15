@@ -21,7 +21,7 @@ order by k.KATEGORIE, k.GEWINNMARGE desc, k.VERKAUFSPREIS desc;
 
 -- 2
 -- Kochreihenfolge generieren/Anzeige in der Küche bereitstellen: Sortiere Komponenten von nicht fertigen
--- Bestellungen nach Aufgabe-Datum und Zubereitungsdauer. Filtere das Ergebnis nach Kategorie und Tisch und Person.
+-- Bestellungen nach Aufgabe-Datum und Zubereitungsdauer. Filtere das Ergebnis nach Kategorie und Tisch.
 -- Es wurde für die Abfrage die Tischnr "1" gewählt
 select K.NAME, KM.MENGE, KM.EINHEIT, K.KATEGORIE, G.ZUBEREITUNGSDAUER, to_char(B.AUFGEGEBEN, 'HH:MI') "Aufgegeben", B.FK_PERSON_TISCH "Tisch", B.FK_PERSON_PLATZ "Platz"
 from KOMPONENTENMENGE KM
@@ -33,8 +33,7 @@ where
         -- Filter auf Kategorie
         --K.KATEGORIE = 'ENTREMETIER' and
         -- Filter auf Tisch und Person
-        B.FK_PERSON_TISCH = 1 --and
-        --B.FK_PERSON_PLATZ = 1
+        B.FK_PERSON_TISCH = 1
 order by K.KATEGORIE, B.AUFGEGEBEN, G.ZUBEREITUNGSDAUER;
 
 -- 3
@@ -52,8 +51,11 @@ order by "Kaeufe Pro Tag" desc;
 
 -- 4
 -- In welcher Kalenderwoche wurde der höchste Gewinn erzielt?
+-- Um den richtigen "Gewinn" zu erhalten müsste dieser Wert noch mit den tatsächlichen Kosten der Woche verrechnet werden
+-- Diese sind uns jedoch nicht bekannt (nicht modeliert).
+-- Hier dargestellt ist also die Kalenderwoche in welcher der höchste Umsatz erzielt wurde
 
--- Nur maximum
+-- Nur Maximum
 with SummierteAbrechnungen as (
     select A.BEZAHLBETRAG,
            TO_CHAR(A.DATUM, 'WW') as KW,
@@ -124,6 +126,7 @@ order by "Bestellungen zu Gewinnmarge" desc;
 
 -- 6
 -- Welches Lebensmittel wurde im letzten Monat am meisten gebraucht?
+-- (Gebraucht: Menge verwendetes Lebensmittel pro Einheit)
 select L.NAME, NVL(ROUND((
            select sum((
                       select MENGELEBENSMITTEL
