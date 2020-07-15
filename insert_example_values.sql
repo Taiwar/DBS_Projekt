@@ -969,26 +969,6 @@ end;
 
 call shuffleEinkaufspreisDates();
 
--- Alle Kalkulations-Daten würfeln
-create or replace procedure shuffleKalkulationDates
-    is
-begin
-    for kal in (select * from KALKULATION)
-        loop
-            update KALKULATION k
-            set DATUM = (
-                SELECT TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') +
-                       DBMS_RANDOM.VALUE(0, TO_DATE('2019-09-30 23:59:59', 'YYYY-MM-DD HH24:MI:SS') -
-                                            TO_DATE('2019-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
-                FROM dual
-            )
-            where kal.GEWINNMARGE = k.GEWINNMARGE and kal.KOSTENMARGE = k.KOSTENMARGE and kal.FK_GERICHT_NAME = k.FK_GERICHT_NAME;
-        end loop;
-end;
-/
-
-call shuffleKalkulationDates();
-
 -- Alle Tisch-Daten würfeln
 create or replace procedure shuffleTischZBDates
     is
