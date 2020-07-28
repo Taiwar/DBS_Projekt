@@ -8,3 +8,10 @@
 
 ## Formatierung
 Die Dateien wurden in der Formatierung UTF-8 erstellt.
+
+## Author(s)
+
+
+* **FMaute (Felix Maute)** - [FMaute](https://github.com/maudeees)
+* **Taiwar (Jonas Müller)** - [Taiwar](https://github.com/Taiwar)
+
