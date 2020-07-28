@@ -5,7 +5,7 @@ Dieses Repository enthält die Resultate eines Projekts, in welchem eine möglic
 
 1. `create_tables.sql` => Enthält SQL-Befehle zum Erstellen der Tabellen wie im relationalen Modell beschrieben und Views die für Abfragen benutzt werden
 2. `insert_example_values.sql` => Enthält SQL-Befehle zum einfügen der Beispieldaten und Funktionen zum zufälligen Setzen von Attributen
-3. `queries.sql` => Enthält SQL-Befehle gegliedert in die 10 Verarbeitungsanforderungen
+3. `queries.sql` => Enthält SQL-Befehle gegliedert in 10 Verarbeitungsanforderungen
 
 ## ER-Modell
 <img src="ER-Modell_220720.png?raw=true" alt="ER-Modell" width="800"/>
