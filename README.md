@@ -9,7 +9,7 @@
 ## Formatierung
 Die Dateien wurden in der Formatierung UTF-8 erstellt.
 
-## Author(s)
+## Autoren
 
 
 * **FMaute (Felix Maute)** - [FMaute](https://github.com/maudeees)
