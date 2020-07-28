@@ -168,7 +168,7 @@ with Verweilzeit As (
 )
 select ROUND(avg(V.ZEIT)*24*60,1) "durch Verweilzeit in Minuten", Round(avg(A.BEZAHLBETRAG),2) "Ausgabe"
 from VERWEILZEIT V
-    join ABRECHNUNG A on V.RECHNNR = A.RECHNUNGSNR
+    join ABRECHNUNG A on V.RECHNNR = A.RECHNUNGSNR;
 
 
 -- 8
