@@ -1,4 +1,5 @@
-# Restaurant
+# Datenbanksysteme-Projekt
+Dieses Repository enthält die Resultate eines Projekts, in welchem eine mögliche Modellierung eines Datenbanksystems im Bereich Restaurant und Gastronomie erstellt wurde.
 
 ## Ausführreihenfolge der SQL-Skripte
 
